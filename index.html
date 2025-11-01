@@ -343,9 +343,6 @@
       <label for="minecraft">Minecraft Username:</label>
       <input type="text" id="minecraft" name="minecraft" required />
 
-      <label for="discord">Discord Userid / Username:</label>
-      <input type="text" id="discord" name="discord" required />
-
       <label for="age">Age:</label>
       <input type="number" id="age" name="age" required />
 
@@ -567,8 +564,7 @@
     const message = `
 **New Application Received**  
 **Name:** ${entries.name}  
-**Minecraft Username:** ${entries.minecraft}  
-**Discord Userid / Username:** ${entries.discord}  
+**Minecraft Username:** ${entries.minecraft}
 **Age:** ${entries.age}  
 **Gender:** ${entries.gender}  
 **Edition:** ${entries.edition}  
@@ -583,7 +579,7 @@
 **Confirmed meet requirements:** Yes
 `;
 
-    const webhookURL = 'YOUR_WEBHOOK_URL_HERE';
+    const webhookURL = 'https://discord.com/api/webhooks/1434217150574231666/FXevYWO_oEyDFecdIYT5q4EGPBKwmnQE4ubd_fOJ9tfRJzT5MPQBINgZQo8SfsOf53ST';
 
     fetch(webhookURL, {
       method: 'POST',
