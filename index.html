@@ -72,13 +72,13 @@
   }
 
   /* Button colors */
-  .ABOUT, .RULES, .ASRP, .APPLY, .DISCORD_LOGIN {
+  .ABOUT, .RULES, .ASRP, .APPLY, .DISCORD_LOGIN, .LOGOUT {
     background-color: #f97316;
     color: #fff;
   }
 
   /* Hover effects for buttons */
-  .ABOUT:hover, .RULES:hover, .ASRP:hover, .APPLY:hover, .DISCORD_LOGIN:hover {
+  .ABOUT:hover, .RULES:hover, .ASRP:hover, .APPLY:hover, .DISCORD_LOGIN:hover, .LOGOUT:hover {
     background-color: #af13ba;
   }
 
@@ -310,6 +310,7 @@
     <button class="btn ASRP" onclick="showASRP()">ASRP</button>
     <button class="btn APPLY" id="applyBtn" style="display:none;" onclick="openApplyForm()">APPLY</button>
     <button class="btn DISCORD_LOGIN" id="loginBtn" onclick="redirectToDiscordOAuth()">Login with Discord</button>
+    <button class="btn LOGOUT" id="logoutBtn" style="display:none;" onclick="logout()">Logout</button>
   </div>
 </nav>
 
@@ -442,167 +443,9 @@
 </div>
 
 <script>
-  // Show main page content
-  function showMain() {
-    document.getElementById('main-content').innerHTML = `
-      <section class="hero" id="main-section">
-        <div class="hero-content">
-          <h1><span>Aafat Gaming</span></h1>
-          <p>❤️ Feel the vibe, live the thrill, and join the Aafat family!</p>
-          <div class="hero-buttons">
-            <button class="btn youtube" onclick="window.open('https://youtube.com/@mafiaaafat?si=vNv1RfjrBCHOo8HS', '_blank')">Youtube</button>
-            <button class="btn discord" onclick="window.open('https://discord.gg/8jegVRgABe', '_blank')">Discord</button>
-            <button class="btn instagram" onclick="window.open('https://instagram.com/ig_aafatyt?igshid=OGQ5ZDc2ODk2ZA==', '_blank')">Instagram</button>
-            <button class="btn steam" onclick="window.open('https://s.team/p/hrpd-vncq/VFCDVTPN', '_blank')">Steam</button>
-          </div>
-        </div>
-      </section>
-    `;
-  }
-
-  // Show rules page
-  function showRules() {
-    document.getElementById('main-content').innerHTML = `
-      <div class="rules-container">
-        <h1>Rules</h1>
-        <button class="back-btn" onclick="showMain()">Back</button>
-        <div class="category">
-          <h2>Discord Rules</h2>
-          <h3>GENERAL RULES</h3>
-          <div class="rules-line">Respect everyone in the server.</div>
-          <div class="rules-line">NSFW is not allowed in the server. (This includes NSFW Pfps/Nickname/Usernames)</div>
-          <div class="rules-line">No use of abusive/toxic words while talking in server.</div>
-          <h3>CHAT RULES</h3>
-          <div class="rules-line">Don't spam: Spamming includes song lyrics, excessive caps/reaction spams, copy pastes, picture/link/GIF spam, reaction spam and walls of text.</div>
-          <div class="rules-line">NSFW: This includes posting NSFW pictures in media channels & use of NSFW words in chats.</div>
-          <div class="rules-line">Personal Conflicts: Any type of personal argument should not be brought up in the server. Direct Messaging (DM) is meant for that.</div>
-          <div class="rules-line">Sensitive Topics: Any debate on Religion, Politics, International Conflicts is not allowed.</div>
-          <div class="rules-line">Advertising: Advertising other Discord Servers or YouTube Videos in chat & in vc is not allowed at all. You can only promote yourself in #channel only if you have required roles.</div>
-          <h3>VC RULE</h3>
-          <div class="rules-line">Dont be annoying to anyone in any Voice Channels.</div>
-          <div class="rules-line">Earrape, Inappropriate Songs, Shouting Is Not allowed and will result in mute.</div>
-          <div class="rules-line">Don't use abusive language in VCs.</div>
-          <div class="rules-line">Make Sure to Follow these from Discord Terms</div>
-          <h3>Admin & Moderation</h3>
-          <div class="rules-line">Follow the instructions of moderators and admins.</div>
-          <div class="rules-line">Reporting issues or violations responsibly.</div>
-        </div>
-        <div class="category">
-          <h2>ASRP 2 Rules</h2>
-          <h3>GENERAL SERVER RULES</h3>
-          <div class="rules-line">Respect everyone — No bullying, harassment, racism, or personal abuse.</div>
-          <div class="rules-line">No hacking, cheating, X-ray, exploit use — Permanent ban without discussion.</div>
-          <div class="rules-line">No griefing protected builds — Only crime allowed within RP rules.</div>
-          <div class="rules-line">No AFK farms or lag-causing machines — Staff will remove if harmful.</div>
-          <div class="rules-line">No spamming or advertising other servers / channels.</div>
-          <div class="rules-line">Follow staff instructions — Staff decisions are final.</div>
-          <div class="rules-line">No real-life threats or personal information sharing ever.</div>
-          <div class="rules-line">No duping items, glitch trading, illegal mods or macros.</div>
-          <div class="rules-line">Build safely — Traps must be RP related and approved.</div>
-          <div class="rules-line">No inappropriate skins/nicknames/signs/books.</div>
-          <h3>ROLEPLAY (RP) RULES</h3>
-          <div class="rules-line">Roleplay is mandatory — Stay in character during RP sessions.</div>
-          <div class="rules-line">Random/Unrealistic killing (RDM) is not allowed.</div>
-          <div class="rules-line">No FearRP violation — Fear for your life in dangerous situations.</div>
-          <div class="rules-line">No PowerGaming — Don’t force actions on another player.</div>
-          <div class="rules-line">No MetaGaming — Don’t use out-of-character knowledge in RP.</div>
-          <div class="rules-line">Crime RP allowed — But follow crime rules below.</div>
-          <div class="rules-line"> Breaking RP rules = fines → jail → temp ban (if repeated).</div>
-          <div class="rules-line">No sexual or NSFW content during roleplay.</div>
-          <h3>CRIME RULES</h3>
-          <div class="rules-line">Destroying full base for robbery - not allowed</div>
-          <div class="rules-line">Killing for no reason - not allowed</div>
-          <h3>SURVIVAL / PVP RULES</h3>
-          <div class="rules-line"> No stealing items from farms unless RP crime permitted.</div>
-          <div class="rules-line"> Respect farms, redstone builds — no grief damage</div>
-          <div class="rules-line"> No killing passive pets or villagers without RP purpose.</div>     
-          <h3>BAN REASONS (INSTANT)</h3>
-          <div class="rules-line">Hacking or unfair mods</div>
-          <div class="rules-line">Real-life threats</div>
-          <div class="rules-line">Sexual or abusive content toward minors</div> 
-          <div class="rules-line">DDOS threats</div> 
-          <div class="rules-line">Staff impersonation</div>  
-          <h3>Punishment System</h3>
-          <div class="rules-line">1st Offense -> Warning + education</div>
-          <div class="rules-line">2nd Offense -> Fine or short temp-jail</div>
-          <div class="rules-line">3rd Offense -> Temp-ban</div> 
-          <div class="rules-line">Extreme Cases -> Permanent Ban</div>  
-          <h3>TERMS & CONDITIONS</h3>
-          <div class="rules-line">Server staff can check inventories, logs, bases if needed</div>
-          <div class="rules-line">Admin decisions regarding bans are final</div>
-          <div class="rules-line">Any in-server purchase follows non-refundable policy</div>
-          <div class="rules-line">Streaming/recording is allowed — but respect privacy</div>
-          <div class="rules-line">Rules can update anytime — players must stay informed</div>
-          <h3>FINAL NOTE</h3>
-          <div class="rules-line">We are here to enjoy, roleplay, build, and create a fun crime SMP experience together ❤️. Follow rules — make the server legendary</div>
-        </div>
-      </div>
-    `;
-  }
-
-  // Open and close apply modal
-  function openApplyForm() {
-    document.getElementById('applyModal').style.display = 'block';
-  }
-
-  function closeApplyForm() {
-    document.getElementById('applyModal').style.display = 'none';
-  }
-
-  // Handle form submission
-  function submitApplication(event) {
-    event.preventDefault();
-    const form = document.getElementById('applyForm');
-    const data = new FormData(form);
-    const entries = Object.fromEntries(data.entries());
-
-    if (!document.getElementById('whitelist').checked) {
-      alert('Please confirm you meet all the requirements.');
-      return;
-    }
-
-    const message = `
-**New Application Received**  
-**Name:** ${entries.name}  
-**Minecraft Username:** ${entries.minecraft}
-**Age:** ${entries.age}  
-**Gender:** ${entries.gender}  
-**Edition:** ${entries.edition}  
-**Languages:** ${entries.languages}  
-**In-character consequences:** ${entries.consequences}  
-**Gameplay preferences:** ${entries.gameplay}  
-**Backstory:** ${entries.backstory}  
-**Been banned before:** ${entries.banned}  
-**Follow rules:** ${entries.rulesAgree}  
-**Read guidelines:** ${entries.guidelines}  
-**Respect all players:** ${entries.respect}  
-**Confirmed meet requirements:** Yes
-`;
-
-    const webhookURL = 'https://discord.com/api/webhooks/1434217150574231666/FXevYWO_oEyDFecdIYT5q4EGPBKwmnQE4ubd_fOJ9tfRJzT5MPQBINgZQo8SfsOf53ST';
-
-    fetch(webhookURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ content: message })
-    }).then(res => {
-      if (res.ok) {
-        alert('Application submitted! Thank you.');
-        form.reset();
-        closeApplyForm();
-      } else {
-        alert('Failed to submit application. Please try again.');
-      }
-    }).catch(error => {
-      alert('Error submitting application. Please try again.');
-      console.error(error);
-    });
-  }
-
   // OAuth2 login
   const clientId = '1434242083425878086'; // Your Discord Client ID
+  const clientSecret = 'YOUR_CLIENT_SECRET'; // Replace with your actual client secret (keep secret!)
   const redirectUri = 'https://aafatgaming.fun/'; // Your redirect URI
 
   function redirectToDiscordOAuth() {
@@ -611,44 +454,74 @@
     window.location.href = oauthUrl;
   }
 
+  // Function to exchange code for access token and fetch user info
+  async function handleOAuthCallback(code) {
+    try {
+      // Exchange code for access token
+      const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          client_id: clientId,
+          client_secret: clientSecret,
+          grant_type: 'authorization_code',
+          code: code,
+          redirect_uri: redirectUri,
+        }),
+      });
+
+      if (!tokenResponse.ok) {
+        throw new Error('Failed to exchange code for token');
+      }
+
+      const tokenData = await tokenResponse.json();
+      const accessToken = tokenData.access_token;
+
+      // Fetch user info
+      const userResponse = await fetch('https://discord.com/api/users/@me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!userResponse.ok) {
+        throw new Error('Failed to fetch user info');
+      }
+
+      const userData = await userResponse.json();
+
+      // Store user info in localStorage
+      localStorage.setItem('discord_logged_in', 'true');
+      localStorage.setItem('discord_user', JSON.stringify({
+        id: userData.id,
+        username: userData.username,
+        discriminator: userData.discriminator,
+      }));
+
+      alert('Logged in with Discord! You can now apply.');
+      document.getElementById('applyBtn').style.display = 'inline-block';
+      document.getElementById('loginBtn').style.display = 'none';
+      document.getElementById('logoutBtn').style.display = 'inline-block';
+
+      // Clear the URL
+      window.history.replaceState({}, document.title, redirectUri);
+    } catch (error) {
+      console.error('OAuth error:', error);
+      alert('Failed to log in with Discord. Please try again.');
+    }
+  }
+
   // Check for OAuth code on page load
   window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     if (code) {
-      // Normally you exchange the code for a token via your backend
-      // For demo, just show login success and set login state
-      alert('Logged in with Discord! You can now apply.');
-      localStorage.setItem('discord_logged_in', 'true');
-      document.getElementById('applyBtn').style.display = 'inline-block';
-      document.getElementById('loginBtn').style.display = 'none';
+      handleOAuthCallback(code);
     } else {
       // Check login state
       if (localStorage.getItem('discord_logged_in') === 'true') {
         document.getElementById('applyBtn').style.display = 'inline-block';
         document.getElementById('loginBtn').style.display = 'none';
-      } else {
-        document.getElementById('applyBtn').style.display = 'none';
-        document.getElementById('loginBtn').style.display = 'inline-block';
-      }
-    }
-  }
-
-  // Optional: logout function
-  function logout() {
-    localStorage.removeItem('discord_logged_in');
-    document.getElementById('applyBtn').style.display = 'none';
-    document.getElementById('loginBtn').style.display = 'inline-block';
-  }
-
-  // Close modal when clicking outside content
-  window.onclick = function(event) {
-    const modal = document.getElementById('applyModal');
-    if (event.target == modal) {
-      closeApplyForm();
-    }
-  }
-</script>
-
-</body>
-</html>
+        document.get
