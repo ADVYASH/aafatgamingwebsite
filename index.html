@@ -1,377 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AAFAT GAMING</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdno0cW12NThtcXBhMzEzbjFpZ2hzd3RocmZkcjlkdWFsM2d6czdiayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/70v4iG7hqjKQy1bcWX/giphy.gif') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .logo {
-            width: 100px;
-            height: 100px;
-        }
-        .buttons {
-            display: flex;
-            gap: 10px;
-        }
-        button {
-            background: #ff0000;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover {
-            background: #cc0000;
-        }
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-        .intro {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .social-logos {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .social-logos img {
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-        }
-        .content {
-            display: none;
-        }
-        .active {
-            display: block;
-        }
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: left;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-        .dashboard {
-            text-align: center;
-        }
-        .profile {
-            margin-top: 20px;
-        }
-        .profile img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aafat Gaming</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+    }
+
+    body {
+      background: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdno0cW12NThtcXBhMzEzbjFpZ2hzd3RocmZkcjlkdWFsM2d6czdiayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/70v4iG7hqjKQy1bcWX/giphy.gif') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 50%;
+      right: 30px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 10;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 20px;
+      border-radius: 20px;
+      transition: 0.3s;
+      text-align: center;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      background: #ff0055;
+      transform: scale(1.05);
+    }
+
+    section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      backdrop-filter: blur(2px);
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      overflow-y: hidden;
+    }
+
+    section.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* ✅ Rules section scrolls */
+    #rules {
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 80px;
+      padding-bottom: 60px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    /* ✅ About section scrolls */
+    #about {
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 80px;
+      padding-bottom: 60px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    /* Scrollbar styling (for both) */
+    #rules::-webkit-scrollbar,
+    #about::-webkit-scrollbar {
+      width: 8px;
+    }
+    #rules::-webkit-scrollbar-thumb,
+    #about::-webkit-scrollbar-thumb {
+      background-color: #ff0055;
+      border-radius: 10px;
+    }
+    #rules::-webkit-scrollbar-track,
+    #about::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      font-size: 4rem;
+      text-shadow: 0 0 20px #ff0055;
+    }
+
+    p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin-top: 15px;
+      text-shadow: 0 0 10px black;
+    }
+
+    .social-links {
+      margin-top: 40px;
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .social-links a img {
+      width: 60px;
+      transition: 0.3s;
+    }
+
+    .social-links a img:hover {
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 10px #ff0055);
+    }
+
+    .rules-container {
+      text-align: left;
+      background: rgba(0,0,0,0.6);
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      line-height: 1.8;
+    }
+
+    .rules-container h2 {
+      color: #ff0055;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #ff0055;
+      padding-bottom: 5px;
+    }
+
+    .rules-container h3 {
+      margin-top: 20px;
+      color: #ffd700;
+    }
+
+    .rules-container ul {
+      margin-left: 20px;
+      list-style: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      background: rgba(0,0,0,0.5);
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    @media (max-width: 1024px) {
+      h1 { font-size: 3rem; }
+      nav { right: 15px; }
+      nav a { padding: 8px 15px; font-size: 0.9rem; }
+      p { font-size: 1.1rem; max-width: 90%; }
+      .social-links a img { width: 50px; }
+      .rules-container { padding: 20px; }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        top: auto;
+        bottom: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        flex-direction: row;
+        background: rgba(0,0,0,0.5);
+        border-radius: 30px;
+        padding: 10px 15px;
+        gap: 10px;
+      }
+      nav a { padding: 8px 12px; font-size: 0.85rem; }
+      h1 { font-size: 2.5rem; }
+      p { font-size: 1rem; }
+      .rules-container { width: 95%; }
+      footer { font-size: 0.8rem; padding: 10px; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      nav a { font-size: 0.8rem; padding: 6px 10px; }
+      .social-links a img { width: 45px; }
+      p { font-size: 0.95rem; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTYxam1wNXFwdHI2a3M2ZXpiNzJnbjR2cHcyd3l6aWhwbncyc3NwaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/PanPZsKfwBMdtWdqwv/giphy.gif" alt="Logo" class="logo">
-        <div class="buttons">
-            <button id="homeBtn">HOME</button>
-            <button id="aboutBtn">ABOUT US</button>
-            <button id="rulesBtn">RULES</button>
-            <button id="applyBtn">APPLY</button>
-            <button id="asrpBtn">ASRP</button>
-            <button id="loginBtn">LOGIN</button>
-            <button id="dashboardBtn" style="display: none;">DASHBOARD</button>
-            <button id="logoutBtn" style="display: none;">LOGOUT</button>
-        </div>
-    </header>
-    <main>
-        <div id="home" class="content active">
-            <div class="intro">❤️ Feel the vibe, live the thrill, and join the Aafat family!</div>
-            <div class="social-logos">
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" onclick="window.open('https://youtube.com', '_blank')">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" onclick="window.open('https://discord.com', '_blank')">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" onclick="window.open('https://instagram.com', '_blank')">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111371.png" alt="Steam" onclick="window.open('https://steam.com', '_blank')">
-            </div>
-        </div>
-        <div id="about" class="content">
-            <h2>About Us</h2>
-            <p>Description of AAFAT GAMING: We are a community focused on Minecraft roleplay, survival, and fun gaming experiences. Join us for epic adventures!</p>
-        </div>
-        <div id="rules" class="content">
-            <h2>Rules</h2>
-            <h3>Discord Rules</h3>
-            <ul>
-                <li>Be respectful to all members.</li>
-                <li>No spamming or harassment.</li>
-                <li>Follow channel guidelines.</li>
-            </ul>
-            <h3>ASRP Rules</h3>
-            <ul>
-                <li>Stay in character.</li>
-                <li>No powergaming.</li>
-                <li>Report issues to staff.</li>
-            </ul>
-        </div>
-        <div id="apply" class="content">
-            <h2>Apply for Whitelist</h2>
-            <form id="applyForm">
-                <label>1. Your Name: <input type="text" id="name" required></label>
-                <label>2. Minecraft Username: <input type="text" id="mcUsername" required></label>
-                <label>4. Age: <input type="number" id="age" required></label>
-                <label>5. Gender: 
-                    <select id="gender" required>
-                        <option value="">Select</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </label>
-                <label>6. Which edition do you play? 
-                    <select id="edition" required>
-                        <option value="">Select</option>
-                        <option value="Java">Java</option>
-                        <option value="Bedrock">Bedrock</option>
-                        <option value="Pocket Edition">Pocket Edition</option>
-                        <option value="Crack Version">Crack Version</option>
-                    </select>
-                </label>
-                <label>7. What languages can your character speak in RP? (Select all that apply)
-                    <input type="checkbox" name="languages" value="Hindi"> Hindi<br>
-                    <input type="checkbox" name="languages" value="English"> English<br>
-                    <input type="checkbox" name="languages" value="Marathi"> Marathi<br>
-                    <input type="checkbox" name="languages" value="Other"> Other
-                </label>
-                <label>8. Are you okay with in-character consequences like jail, fines, injury in RP? 
-                    <select id="consequences" required>
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </label>
-                <label>9. What gameplay do you enjoy the most? (Select all that apply)
-                    <input type="checkbox" name="gameplay" value="Survival"> Survival<br>
-                    <input type="checkbox" name="gameplay" value="Creative"> Creative<br>
-                    <input type="checkbox" name="gameplay" value="Adventure"> Adventure<br>
-                    <input type="checkbox" name="gameplay" value="Hardcore"> Hardcore<br>
-                    <input type="checkbox" name="gameplay" value="Spectator"> Spectator<br>
-                    <input type="checkbox" name="gameplay" value="Roleplay"> Roleplay<br>
-                    <input type="checkbox" name="gameplay" value="PvP"> PvP<br>
-                    <input type="checkbox" name="gameplay" value="PvE"> PvE<br>
-                    <input type="checkbox" name="gameplay" value="Factions"> Factions<br>
-                    <input type="checkbox" name="gameplay" value="Anarchy"> Anarchy<br>
-                    <input type="checkbox" name="gameplay" value="Skyblock"> Skyblock<br>
-                    <input type="checkbox" name="gameplay" value="Oneblock"> Oneblock<br>
-                    <input type="checkbox" name="gameplay" value="Life Steal"> Life Steal<br>
-                    <input type="checkbox" name="gameplay" value="SMP"> SMP<br>
-                    <input type="checkbox" name="gameplay" value="Building"> Building<br>
-                    <input type="checkbox" name="gameplay" value="Redstone/Technical"> Redstone/Technical<br>
-                    <input type="checkbox" name="gameplay" value="Farming"> Farming<br>
-                    <input type="checkbox" name="gameplay" value="Trading/Economy"> Trading/Economy<br>
-                    <input type="checkbox" name="gameplay" value="Exploring"> Exploring<br>
-                    <input type="checkbox" name="gameplay" value="Parkour"> Parkour<br>
-                    <input type="checkbox" name="gameplay" value="Mini Games"> Mini Games
-                </label>
-                <label>10. Backstory of your character: <textarea id="backstory" required></textarea></label>
-                <label>11. Have you ever been banned from any server? 
-                    <select id="banned" required>
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </label>
-                <label>12. Do you agree to follow the server rules? 
-                    <select id="agreeRules" required>
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </label>
-                <label>13. Have you read and understood the server guidelines? 
-                    <select id="readGuidelines" required>
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </label>
-                <label>14. Do you agree to respect all players and staff members? 
-                    <select id="respect" required>
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </label>
-                <button type="submit">Submit Application</button>
-            </form>
-        </div>
-        <div id="asrp" class="content">
-            <h2>ASRP</h2>
-            <p>This is the ASRP section. Only whitelisted users can see this content.</p>
-        </div>
-        <div id="dashboard" class="content">
-            <h2>Dashboard</h2>
-            <div class="profile">
-                <img id="profilePic" src="" alt="Profile Picture">
-                <p id="userName"></p>
-                <p id="whitelistStatus"></p>
-            </div>
-        </div>
-    </main>
-    <script>
-        // Replace with your actual Discord OAuth Client ID and Redirect URI
-        const CLIENT_ID = '1434242083425878086'; // e.g., '123456789012345678'
-        const REDIRECT_URI = 'https://aafatgaming.fun/'; // e.g., 'https://yourdomain.com/index.html' (must match Discord app settings)
-        const SCOPE = 'identify'; // Scope for basic user info
 
-        let isLoggedIn = false;
-        let userData = { name: '', avatar: '', whitelisted: false };
+  <nav>
+    <a onclick="showSection('home')">Home</a>
+    <a onclick="showSection('about')">About</a>
+    <a onclick="showSection('rules')">Rules</a>
+    <a href="https://your-asrp-link-here.com" target="_blank">ASRP</a>
+  </nav>
 
-        // Check for OAuth code on page load
-        window.onload = async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('code');
-            if (code) {
-                try {
-                    console.log('Exchanging code for token...');
-                    // Exchange code for access token
-                    const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            client_id: CLIENT_ID,
-                            client_secret: 'GeqMIFygIWQRIJr8OJ9QVqHtNrYrBuiE', // Replace with your client secret (keep secret!)
-                            grant_type: 'authorization_code',
-                            code: code,
-                            redirect_uri: REDIRECT_URI,
-                        }),
-                    });
-                    if (!tokenResponse.ok) {
-                        throw new Error(`Token exchange failed: ${tokenResponse.status} ${tokenResponse.statusText}`);
-                    }
-                    const tokenData = await tokenResponse.json();
-                    console.log('Token received:', tokenData);
-                    if (tokenData.access_token) {
-                        // Get user info
-                        const userResponse = await fetch('https://discord.com/api/users/@me', {
-                            headers: {
-                                Authorization: `Bearer ${tokenData.access_token}`,
-                            },
-                        });
-                        if (!userResponse.ok) {
-                            throw new Error(`User fetch failed: ${userResponse.status} ${userResponse.statusText}`);
-                        }
-                        const user = await userResponse.json();
-                        console.log('User data:', user);
-                        userData = {
-                            name: user.username,
-                            avatar: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
-                            whitelisted: true, // Mock whitelist check; replace with actual logic (e.g., check against a database)
-                        };
-                        isLoggedIn = true;
-                        document.getElementById('loginBtn').style.display = 'none';
-                        document.getElementById('dashboardBtn').style.display = 'inline';
-                        document.getElementById('logoutBtn').style.display = 'inline';
-                        showContent('dashboard');
-                        // Clean URL
-                        window.history.replaceState({}, document.title, window.location.pathname);
-                        console.log('Login successful');
-                    } else {
-                        throw new Error('No access token received');
-                    }
-                } catch (error) {
-                    console.error('Login error:', error);
-                    alert('Login failed: ' + error.message);
-                }
-            }
-        };
+  <section id="home" class="active">
+    <h1>AAFAT GAMING</h1>
+    <p>❤️ Feel the vibe, live the thrill, and join the Aafat family!</p>
+    <div class="social-links">
+      <a href="https://youtube.com/@mafiaaafat?si=gJsHd43FYviEPlyf" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+      <a href="discord.gg/8jegVRgABe" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord"></a>
+      <a href="instagram.com/ig_aafatyt?igshid=OGQ5ZDc2ODk2ZA==" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram"></a>
+    </div>
+  </section>
 
-        // Navigation
-        document.getElementById('homeBtn').addEventListener('click', () => showContent('home'));
-        document.getElementById('aboutBtn').addEventListener('click', () => showContent('about'));
-        document.getElementById('rulesBtn').addEventListener('click', () => showContent('rules'));
-        document.getElementById('applyBtn').addEventListener('click', () => {
-            if (!isLoggedIn) {
-                alert('You must login through Discord to apply.');
-                return;
-            }
-            showContent('apply');
-        });
-        document.getElementById('asrpBtn').addEventListener('click', () => {
-            if (!isLoggedIn || !userData.whitelisted) {
-                alert('You must be logged in and whitelisted to view ASRP.');
-                return;
-            }
-            showContent('asrp');
-        });
-        document.getElementById('loginBtn').addEventListener('click', () => {
-            // Redirect to Discord OAuth
-            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=${SCOPE}`;
-        });
-        document.getElementById('dashboardBtn').addEventListener('click', () => showContent('dashboard'));
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            isLoggedIn = false;
-            userData = { name: '', avatar: '', whitelisted: false };
-            document.getElementById('loginBtn').style.display = 'inline';
-            document.getElementById('dashboardBtn').style.display = 'none';
-            document.getElementById('logoutBtn').style.display = 'none';
-            showContent('home');
-        });
+  <section id="about">
+    <h1>About Us</h1>
+    <p>💖 About Us – Aafat Gaming</p>
+    <p>Heyyy! 👋 I’m Meet, a 25-year-old gamer girl from Mumbai, and the heart behind Aafat Gaming. 🎮✨</p>
+    <p>Gaming has been a big part of my life for as long as I can remember. It started as a way to relax after long days, and slowly turned into something so much more — a passion, a dream, and now, a full-time journey that I get to share with all of you. 💕</p>
+    <p>When I created Aafat Gaming, I never imagined it would grow into such an amazing community. What began as a few livestreams and casual uploads has now become a space filled with laughter, chaos, and so many beautiful connections. 😄</p>
+    <p>Here, it’s not just about playing games — it’s about sharing moments, having fun, and being real. You’ll find a mix of everything — from intense battles and clutch moments to the random jokes, late-night talks, and a lot of heart. ❤️</p>
+    <p>I live in Mumbai and, honestly, YouTube feels like home to me now. It’s where I get to be myself — a little crazy, a little emotional, and totally “Aafat” in my own way. 😜</p>
+    <p>What makes this channel special isn’t just the gameplay, but you guys — the Aafat Family. Every comment, every message, every moment of support means the world to me. You’re the reason I smile, create, and keep pushing forward every single day. 🌸</p>
+    <p>If you’re new here, welcome to the madness! 💥</p>
+    <p>Grab your snacks, tune in, and get ready to laugh, vibe, and be part of something real. Because here at Aafat Gaming, it’s not just a channel — it’s a family.</p>
+    <p>🎮 Feel the vibe. Live the thrill. Join the Aafat family. 🎮 🔥</p>
+  </section>
 
-        function showContent(id) {
-            document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if (id === 'dashboard') {
-                document.getElementById('profilePic').src = userData.avatar;
-                document.getElementById('userName').textContent = userData.name;
-                document.getElementById('whitelistStatus').textContent = userData.whitelisted ? 'Whitelisted' : 'Not Whitelisted';
-            }
-        }
+  <section id="rules">
+    <h1>Rules & Regulations</h1>
+    <div class="rules-container">
+      <h2>🎥 Aafat Gaming – YouTube Stream Rules 💎</h2>
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Youtube Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Be respectful avoid hate abuse or toxicity and treat everyone kindly.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No spam don’t flood chat with repeated messages emojis or caps.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Keep it clean no NSFW offensive or adult content and stay family friendly.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No self promo don’t advertise channels servers or links without permission.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Respect mods follow moderator instructions their decision is final.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Stay positive avoid fights trolling or negative behavior.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No spoilers don’t backseat game or ruin surprises during streams.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No hacks or scams don’t promote cheats hacks or fake giveaways.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Follow platform rules obey YouTube’s community guidelines and terms.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Have fun enjoy the vibe chat nicely and be part of the Aafat family ❤️🔥</li>
+      </ul>
 
-        // Form submission
-        document.getElementById('applyForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData);
-            // Collect checkboxes
-            data.languages = Array.from(document.querySelectorAll('input[name="languages"]:checked')).map(cb => cb.value);
-            data.gameplay = Array.from(document.querySelectorAll('input[name="gameplay"]:checked')).map(cb => cb.value);
+      <h2>Discord Rules</h2>
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        General Conduct Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Respect everyone — no hate speech, racism, or discrimination.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No harassment, bullying, or threats of violence.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No toxic, rude, or aggressive behavior toward anyone.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Keep usernames, nicknames, and profile pictures appropriate..</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Respect privacy — don’t share personal or private information.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Follow instructions from moderators and admins.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No impersonating other members, staff, or bots.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Use common sense and maintain a positive atmosphere.</li>
+      </ul>
 
-            // Build formatted message with questions and answers
-            let messageContent = `@${userData.name} submitted an application:\n\n`;
-            messageContent += `1. Your Name: ${data.name}\n`;
-            messageContent += `2. Minecraft Username: ${data.mcUsername}\n`;
-            messageContent += `4. Age: ${data.age}\n`;
-            messageContent += `5. Gender: ${data.gender}\n`;
-            messageContent += `6. Which edition do you play?: ${data.edition}\n`;
-            messageContent += `7. What languages can your character speak in RP?: ${data.languages.join(', ') || 'None'}\n`;
-            messageContent += `8. Are you okay with in-character consequences like jail, fines, injury in RP?: ${data.consequences}\n`;
-            messageContent += `9. What gameplay do you enjoy the most?: ${data.gameplay.join(', ') || 'None'}\n`;
-            messageContent += `10. Backstory of your character: ${data.backstory}\n`;
-            messageContent += `11. Have you ever been banned from any server?: ${data.banned}\n`;
-            messageContent += `12. Do you agree to follow the server rules?: ${data.agreeRules
-    </script>
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Chat & Text Channel Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No spamming (messages, emojis, mentions, links, or caps).</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No NSFW (18+) or disturbing content.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No self-promotion or advertising without permission.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Avoid controversial or sensitive topics (religion, politics, etc.).</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No arguing or drama in public channels — take it to DMs if needed.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Keep messages relevant to the channel’s purpose.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Respect moderators and other users’ opinions.</li>
+      </ul>
+
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Voice Channel Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No earrape, loud mic noises, or soundboard spam.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No bullying, shouting, or interrupting others in VC.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No NSFW or inappropriate discussions.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Respect people’s comfort — don’t force conversations.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Get consent before recording or streaming in VC.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Follow Discord’s content and behavior guidelines.</li>
+      </ul>
+
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Streaming / Screen Share Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Only stream games or creative content — not NSFW or copyrighted material.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No 18+ or illegal content.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Do not stream private chats or personal DMs.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Get permission before streaming content that includes other members.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Staff has the final decision on what can be streamed.</li>
+      </ul>
+
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Bot & Automation Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Use bot commands only in the assigned channels.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Do not spam bot commands or exploit bot bugs.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Self-bots, macros, or automation tools are forbidden.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Don’t use bots to cheat level or currency systems.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Follow the bot’s rules and restrictions.</li>   
+      </ul>
+
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Malicious Activity Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No hacking, phishing, or scamming attempts.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No spreading malware, viruses, or harmful links.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No raiding, DDoS threats, or exploiting vulnerabilities.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No sharing pirated, cracked, or stolen content.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Real-world trading or selling accounts is not allowed.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Alternate accounts (alts) for rule evasion are prohibited.</li>
+      </ul>
+
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Humanity & Community Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No toxic behavior, targeted insults, or threats.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Be kind and humble to everyone.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No fake identity, catfishing, or impersonation.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Don’t expose private information or screenshots.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Don’t beg for attention, roles, or special treatment.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Encourage and welcome new members respectfully.</li>
+      </ul>
+
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Media & Content Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No NSFW or disturbing visuals.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          No offensive memes or political/religious content.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Credit the creators if reposting art or clips.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Don’t leak private content or screenshots.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Post media in the right channels only.</li>
+      </ul>
+
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Staff & Moderation Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Respect moderator actions — their word is final.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Don’t ping or tag staff unnecessarily.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          If you disagree with a mod’s decision, open a support ticket.</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Don’t mini-mod (act like staff if you’re not).</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Always cooperate during moderation actions or investigations.</li>              
+      </ul>
+
+      <h3><img src="https://cdn.discordapp.com/emojis/1433851093229768735.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+        Discord Platform Rules</h3>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Follow Discord’s Terms of Service</li>
+        <li><img src="https://cdn.discordapp.com/emojis/1424415014441324635.gif" alt="Arrow Purple" width="26" height="26" style="vertical-align: middle;">
+          Follow Discord’s Community Guidelines</li>            
+      </ul>     
+    </div>
+  </section>
+
+  <footer>
+    © 2025 AAFAT GAMING | All Rights Reserved
+  </footer>
+
+  <script>
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('section');
+      sections.forEach(sec => sec.classList.remove('active'));
+      const activeSec = document.getElementById(sectionId);
+      activeSec.classList.add('active');
+    }
+  </script>
 </body>
 </html>
