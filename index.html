@@ -240,8 +240,8 @@
     </main>
     <script>
         // Replace with your actual Discord OAuth Client ID and Redirect URI
-        const CLIENT_ID = 'YOUR_DISCORD_CLIENT_ID'; // e.g., '123456789012345678'
-        const REDIRECT_URI = 'YOUR_REDIRECT_URI'; // e.g., 'https://yourdomain.com/index.html' (must match Discord app settings)
+        const CLIENT_ID = '1434242083425878086'; // e.g., '123456789012345678'
+        const REDIRECT_URI = 'https://aafatgaming.fun/'; // e.g., 'https://yourdomain.com/index.html' (must match Discord app settings)
         const SCOPE = 'identify'; // Scope for basic user info
 
         let isLoggedIn = false;
@@ -262,7 +262,7 @@
                         },
                         body: new URLSearchParams({
                             client_id: CLIENT_ID,
-                            client_secret: 'YOUR_CLIENT_SECRET', // Replace with your client secret (keep secret!)
+                            client_secret: 'GeqMIFygIWQRIJr8OJ9QVqHtNrYrBuiE', // Replace with your client secret (keep secret!)
                             grant_type: 'authorization_code',
                             code: code,
                             redirect_uri: REDIRECT_URI,
@@ -372,3 +372,6 @@
             messageContent += `10. Backstory of your character: ${data.backstory}\n`;
             messageContent += `11. Have you ever been banned from any server?: ${data.banned}\n`;
             messageContent += `12. Do you agree to follow the server rules?: ${data.agreeRules
+    </script>
+</body>
+</html>
