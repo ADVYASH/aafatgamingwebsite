@@ -240,8 +240,8 @@
     </main>
     <script>
         // Replace with your actual Discord OAuth Client ID and Redirect URI
-        const CLIENT_ID = '1434242083425878086'; // e.g., '123456789012345678'
-        const REDIRECT_URI = 'https://aafatgaming.fun/'; // e.g., 'https://yourdomain.com/index.html' (must match Discord app settings)
+        const CLIENT_ID = 'YOUR_DISCORD_CLIENT_ID'; // e.g., '123456789012345678'
+        const REDIRECT_URI = 'YOUR_REDIRECT_URI'; // e.g., 'https://yourdomain.com/index.html' (must match Discord app settings)
         const SCOPE = 'identify'; // Scope for basic user info
 
         let isLoggedIn = false;
@@ -262,7 +262,7 @@
                         },
                         body: new URLSearchParams({
                             client_id: CLIENT_ID,
-                            client_secret: 'GeqMIFygIWQRIJr8OJ9QVqHtNrYrBuiE', // Replace with your client secret (keep secret!)
+                            client_secret: 'YOUR_CLIENT_SECRET', // Replace with your client secret (keep secret!)
                             grant_type: 'authorization_code',
                             code: code,
                             redirect_uri: REDIRECT_URI,
@@ -359,18 +359,16 @@
             data.languages = Array.from(document.querySelectorAll('input[name="languages"]:checked')).map(cb => cb.value);
             data.gameplay = Array.from(document.querySelectorAll('input[name="gameplay"]:checked')).map(cb => cb.value);
 
-            // Send to Discord webhook
-            const webhookUrl = 'https://discord.com/api/webhooks/1434217150574231666/FXevYWO_oEyDFecdIYT5q4EGPBKwmnQE4ubd_fOJ9tfRJzT5MPQBINgZQo8SfsOf53ST'; // Replace with actual webhook URL
-            const message = {
-                content: `@${userData.name} submitted an application:\n${JSON.stringify(data, null, 2)}`
-            };
-            await fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(message)
-            });
-            alert('Application submitted!');
-        });
-    </script>
-</body>
-</html>
+            // Build formatted message with questions and answers
+            let messageContent = `@${userData.name} submitted an application:\n\n`;
+            messageContent += `1. Your Name: ${data.name}\n`;
+            messageContent += `2. Minecraft Username: ${data.mcUsername}\n`;
+            messageContent += `4. Age: ${data.age}\n`;
+            messageContent += `5. Gender: ${data.gender}\n`;
+            messageContent += `6. Which edition do you play?: ${data.edition}\n`;
+            messageContent += `7. What languages can your character speak in RP?: ${data.languages.join(', ') || 'None'}\n`;
+            messageContent += `8. Are you okay with in-character consequences like jail, fines, injury in RP?: ${data.consequences}\n`;
+            messageContent += `9. What gameplay do you enjoy the most?: ${data.gameplay.join(', ') || 'None'}\n`;
+            messageContent += `10. Backstory of your character: ${data.backstory}\n`;
+            messageContent += `11. Have you ever been banned from any server?: ${data.banned}\n`;
+            messageContent += `12. Do you agree to follow the server rules?: ${data.agreeRules
