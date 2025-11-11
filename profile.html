@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Discord Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://media.giphy.com/media/6FmWneK9CsoumzFsqZ/giphy.gif') no-repeat center center/cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .neon {
+      color: #f0f;
+      text-shadow: 0 0 10px #f0f, 0 0 20px #f0f;
+    }
+
+    .profile-card {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 20px;
+      border: 2px solid #f0f;
+      box-shadow: 0 0 25px #f0f;
+      width: 90%;
+      max-width: 450px;
+    }
+
+    .avatar {
+      border-radius: 50%;
+      border: 3px solid #0ff;
+      width: 120px;
+      height: 120px;
+    }
+
+    .info {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .info p {
+      font-size: 1em;
+      margin: 5px 0;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      border: 2px solid #f0f;
+      background: transparent;
+      color: #f0f;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #f0f;
+      color: black;
+      box-shadow: 0 0 15px #f0f;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card">
+    <img id="avatar" class="avatar" src="" alt="Avatar">
+    <h2 id="username" class="neon"></h2>
+    <div class="info" id="userinfo"></div>
+    <button class="back-btn" onclick="goBack()">← Back to Home</button>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("discordUser"));
+    if (!user) window.location.href = "index.html";
+
+    const avatar = user.avatar
+      ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=4096`
+      : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
+
+    document.getElementById("avatar").src = avatar;
+    document.getElementById("username").innerText = `${user.username}#${user.discriminator}`;
+
+    document.getElementById("userinfo").innerHTML = `
+      <p><b>User ID:</b> ${user.id}</p>
+      <p><b>Email:</b> ${user.email || "Not available"}</p>
+      <p><b>Locale:</b> ${user.locale || "Unknown"}</p>
+      <p><b>MFA Enabled:</b> ${user.mfa_enabled ? "✅ Yes" : "❌ No"}</p>
+      <p><b>Nitro:</b> ${
+        user.premium_type === 2
+          ? "Nitro Classic"
+          : user.premium_type === 1
+          ? "Nitro Basic"
+          : "None"
+      }</p>
+    `;
+
+    function goBack() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
