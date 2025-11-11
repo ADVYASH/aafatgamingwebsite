@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aafat Syndicate Roleplay | Rules</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 15px;
+      position: relative;
+      background: #000;
+    }
+
+    /* 🌌 Animated Background - click fix (z-index) */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjg0dHllYXM5Zzd3ZXE4MWFubHZzZWM4emN2eHduN3QwY2kybm9oYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/U3qYN8S0j3bpK/giphy.gif') 
+                  no-repeat center center fixed;
+      background-size: cover;
+      opacity: 0.25;
+      z-index: -1; /* ✅ keeps it behind all clickable elements */
+      pointer-events: none; /* ✅ allows clicks to pass through */
+    }
+
+    /* 🔙 Back Button */
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 18px;
+      background: #00ffff22;
+      color: #00ffff;
+      border: 1px solid #00ffff55;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      text-shadow: 0 0 10px #00ffff;
+      box-shadow: 0 0 15px #00ffff33;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .back-button:hover {
+      background: #00ffff;
+      color: #000;
+      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      animation: glowText 2s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #00ffff;
+      text-shadow: 0 0 25px #00ffff;
+    }
+
+    header p {
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    /* Tab Buttons */
+    .tab-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      z-index: 2;
+    }
+
+    .tab-button {
+      background: #00ffff22;
+      color: #00ffff;
+      border: 1px solid #00ffff55;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      text-shadow: 0 0 10px #00ffff;
+      box-shadow: 0 0 10px #00ffff33;
+      transition: all 0.3s ease;
+      z-index: 3;
+    }
+
+    .tab-button:hover {
+      transform: scale(1.05);
+    }
+
+    .tab-button.active {
+      background: #00ffff;
+      color: #000;
+      box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff;
+    }
+
+    /* Rules Container */
+    .rules-container {
+      width: 100%;
+      max-width: 1000px;
+      background: rgba(20, 20, 35, 0.85);
+      border-radius: 15px;
+      box-shadow: 0 0 25px #00ffff33;
+      padding: 25px 20px;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      color: #00ffff;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      text-shadow: 0 0 12px #00ffff;
+      border-bottom: 2px solid #00ffff55;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      color: #66ffff;
+      margin-top: 20px;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      text-shadow: 0 0 8px #00ffff;
+      margin-bottom: 10px;
+    }
+
+    .rule-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 0;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      color: #ddd;
+      padding-left: 10px;
+      border-left: 2px solid #00ffff33;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    .rule-line:hover {
+      color: #00ffff;
+      transform: translateX(5px);
+    }
+
+    .emoji {
+      font-size: 1.3rem;
+      animation: bounce 2s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Footer Buttons */
+    .button-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .glow-button {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #00ffff22;
+      color: #00ffff;
+      border: 1px solid #00ffff55;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      text-shadow: 0 0 10px #00ffff;
+      box-shadow: 0 0 15px #00ffff33;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .glow-button:hover {
+      background: #00ffff;
+      color: #000;
+      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+    }
+
+    .youtube-button {
+      background: #ff000022;
+      color: #ff0000;
+      border: 1px solid #ff000055;
+      text-shadow: 0 0 10px #ff0000;
+      box-shadow: 0 0 15px #ff000033;
+    }
+
+    .youtube-button:hover {
+      background: #ff0000;
+      color: #fff;
+      box-shadow: 0 0 25px #ff0000, 0 0 40px #ff0000;
+    }
+
+    .instagram-button {
+      background: linear-gradient(45deg, #fd1d1d55, #833ab455, #fcb04555);
+      color: #ff66cc;
+      border: 1px solid #ff66cc55;
+      text-shadow: 0 0 10px #ff66cc;
+      box-shadow: 0 0 15px #ff66cc33;
+    }
+
+    .instagram-button:hover {
+      background: linear-gradient(45deg, #fcb045, #fd1d1d, #833ab4);
+      color: #fff;
+      box-shadow: 0 0 25px #ff66cc, 0 0 40px #ff66cc;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      color: #888;
+      text-align: center;
+      z-index: 1;
+    }
+
+    footer a {
+      color: #00ffff;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+
+    @keyframes glowText {
+      from { text-shadow: 0 0 15px #00ffff; }
+      to { text-shadow: 0 0 40px #00ffff; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">⮌ Undo</a>
+
+  <header>
+    <h1>⚡ Aafat Gaming Rules ⚡</h1>
+    <p>🔥💎Play fair. Chat nice. Stay loyal. Be legendary.💎🔥</p>
+  </header>
+
+  <div class="tab-buttons">
+    <button class="tab-button active" data-tab="youtube">YouTube</button>
+    <button class="tab-button" data-tab="discord">Discord</button>
+    <button class="tab-button" data-tab="asrp">ASRP</button>
+  </div>
+
+  <div class="rules-container">
+    <div id="youtube" class="tab-content active">
+      <h2>🎮 Aafat Gaming – YouTube Stream Rules 💎</h2>
+      <h3>Respect Everyone</h3>
+      <div class="rule-line"><span class="emoji">🤝</span>Be kind and respectful to everyone in chat.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>No hate, insults, or toxic behavior.</div>
+      <div class="rule-line"><span class="emoji">💬</span>Treat others how you want to be treated.</div>
+      <div class="rule-line"><span class="emoji">🌍</span>Everyone is welcome here, keep it friendly.</div>
+
+      <h3>No Spam</h3>
+      <div class="rule-line"><span class="emoji">🔁</span>Don’t send the same message again and again.</div>
+      <div class="rule-line"><span class="emoji">😵</span>Avoid emoji spam or ALL CAPS.</div>
+      <div class="rule-line"><span class="emoji">🔗</span>No random links or self-promotion.</div>
+      <div class="rule-line"><span class="emoji">🧹</span>Keep chat clean and easy to read.</div>
+
+      <h3>Keep It Family-Friendly</h3>
+      <div class="rule-line"><span class="emoji">🙊</span>No bad words or adult jokes.</div>
+      <div class="rule-line"><span class="emoji">🚷</span>Don’t talk about religion, politics, or sensitive topics.</div>
+      <div class="rule-line"><span class="emoji">🧑‍🎤</span>Keep your username and profile picture decent.</div>
+      <div class="rule-line"><span class="emoji">🌈</span>This is a safe place for everyone.</div>
+
+      <h3>No Self-Promotion</h3>
+      <div class="rule-line"><span class="emoji">📵</span>Don’t promote your own YouTube, Discord, or socials.</div>
+      <div class="rule-line"><span class="emoji">❌</span>No asking for subs, raids, or shoutouts.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>Don’t advertise other servers or creators.</div>
+      <div class="rule-line"><span class="emoji">🏅</span>Earn respect by being active, not by promoting.</div>
+
+      <h3>Respect the Mods</h3>
+      <div class="rule-line"><span class="emoji">🧙‍♂️</span>Mods keep the chat safe, listen to them.</div>
+      <div class="rule-line"><span class="emoji">⚠️</span>If a mod deletes a message, don’t argue.</div>
+      <div class="rule-line"><span class="emoji">🙋</span>Ask questions politely if you’re unsure.</div>
+      <div class="rule-line"><span class="emoji">🧠</span>Mods make the stream better for everyone.</div>
+
+      <h3>Stay Positive</h3>
+      <div class="rule-line"><span class="emoji">😄</span>Be kind and supportive in chat.</div>
+      <div class="rule-line"><span class="emoji">🤐</span>Don’t argue, troll, or bring drama.</div>
+      <div class="rule-line"><span class="emoji">🎉</span>Cheer for others and celebrate good moments.</div>
+      <div class="rule-line"><span class="emoji">🌟</span>A positive chat makes the stream fun for everyone!</div>
+
+      <h3>No Spoilers or Backseat Gaming</h3>
+      <div class="rule-line"><span class="emoji">🕹️</span>Don’t tell the streamer what to do unless asked.</div>
+      <div class="rule-line"><span class="emoji">🤫</span>No spoilers or story hints.</div>
+      <div class="rule-line"><span class="emoji">😎</span>Let everyone enjoy the surprise moments.</div>
+      <div class="rule-line"><span class="emoji">🎬</span>Just watch, react, and have fun together.</div>
+
+      <h3>No Hacks or Scams</h3>
+      <div class="rule-line"><span class="emoji">🧨</span>Don’t share cheats, hacks, or mod tools.</div>
+      <div class="rule-line"><span class="emoji">⚔️</span>No fake giveaways or scam links.</div>
+      <div class="rule-line"><span class="emoji">🧍</span>Be real, no impersonation or fake accounts.</div>
+      <div class="rule-line"><span class="emoji">🔒</span>Hackers and scammers get banned instantly.</div>
+
+      <h3>Follow YouTube Rules</h3>
+      <div class="rule-line"><span class="emoji">📘</span>Follow YouTube’s community guidelines.</div>
+      <div class="rule-line"><span class="emoji">🎥</span>No copyrighted or stolen content.</div>
+      <div class="rule-line"><span class="emoji">🚨</span>Respect YouTube’s terms of service.</div>
+
+      <h3>Enjoy the Aafat Family Vibe</h3>
+      <div class="rule-line"><span class="emoji">🗨️</span>Chat, laugh, and enjoy the stream!</div>
+      <div class="rule-line"><span class="emoji">👍</span>Support the channel with likes and shares.</div>
+      <div class="rule-line"><span class="emoji">🤗</span>Make new friends and stay positive.</div>
+      <div class="rule-line"><span class="emoji">💎</span>Be proud to be part of the Aafat Family 🔥🎮</div> 
+    </div>
+
+    <div id="discord" class="tab-content">
+      <h2>Discord Rules</h2>
+      <h3>General Conduct Rules</h3>
+      <div class="rule-line"><span class="emoji">🤝</span>Respect everyone, no hate, racism, or discrimination.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>No bullying, harassment, or threats.</div>
+      <div class="rule-line"><span class="emoji">😇</span>Keep your language and behavior positive.</div>
+      <div class="rule-line"><span class="emoji">🧑‍🎨</span>Use appropriate usernames, nicknames, and profile pics.</div>
+      <div class="rule-line"><span class="emoji">🔒</span>Don’t share your or others’ private info.</div>
+      <div class="rule-line"><span class="emoji">🧭</span>Follow mod and admin instructions at all times.</div>
+      <div class="rule-line"><span class="emoji">🤖</span>Don’t pretend to be staff, bots, or other members.</div>
+      <div class="rule-line"><span class="emoji">💬</span>Use common sense and keep a friendly vibe.</div>
+
+      <h3>Chat & Text Channel Rules</h3>
+      <div class="rule-line"><span class="emoji">🔁</span>No spam, messages, emojis, mentions, or links.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>No NSFW or 18+ content anywhere.</div>
+      <div class="rule-line"><span class="emoji">📢</span>No self-promotion without permission.</div>
+      <div class="rule-line"><span class="emoji">⚠️</span>Avoid political or controversial topics.</div>
+      <div class="rule-line"><span class="emoji">🤐</span>No public drama, talk privately if needed.</div>
+      <div class="rule-line"><span class="emoji">🎯</span>Stay on topic in each channel.</div>
+      <div class="rule-line"><span class="emoji">🧑‍⚖️</span>Respect mods and other users’ opinions.</div>
+
+      <h3>Voice Channel Rules</h3>
+      <div class="rule-line"><span class="emoji">🔊</span>No loud noises, mic spam, or soundboards.</div>
+      <div class="rule-line"><span class="emoji">🗣️</span>Don’t yell, interrupt, or bully others.</div>
+      <div class="rule-line"><span class="emoji">🚷</span>Keep conversations friendly and safe.</div>
+      <div class="rule-line"><span class="emoji">🙅</span>Don’t force others to talk or join.</div>
+      <div class="rule-line"><span class="emoji">🎥</span>Get consent before recording or streaming VC.</div>
+      <div class="rule-line"><span class="emoji">📜</span>Follow Discord’s content and behavior rules.</div>
+
+      <h3>Streaming & Screen Share Rules</h3>
+      <div class="rule-line"><span class="emoji">🎮</span>Only stream games or creative content.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>No NSFW, copyrighted, or illegal content.</div>
+      <div class="rule-line"><span class="emoji">🙈</span>Don’t stream private DMs or personal stuff.</div>
+      <div class="rule-line"><span class="emoji">🧾</span>Ask permission if your stream includes others.</div>
+      <div class="rule-line"><span class="emoji">👑</span>Staff have the final say on what can be streamed.</div>
+
+      <h3>Bot & Automation Rules</h3>
+      <div class="rule-line"><span class="emoji">💬</span>Use bot commands in the correct channels.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>Don’t spam commands or exploit bot bugs.</div>
+      <div class="rule-line"><span class="emoji">🧍‍♂️</span>No self-bots, macros, or automation tools.</div>
+      <div class="rule-line"><span class="emoji">💰</span>Don’t use bots to cheat currency or XP.</div>
+      <div class="rule-line"><span class="emoji">⚙️</span>Follow each bot’s usage rules.</div>
+
+      <h3>Malicious Activity Rules</h3>
+      <div class="rule-line"><span class="emoji">🧨</span>No hacking, phishing, or scamming.</div>
+      <div class="rule-line"><span class="emoji">🦠</span>Don’t spread viruses, malware, or harmful links.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>No DDoS threats, raids, or exploiting.</div>
+      <div class="rule-line"><span class="emoji">💻</span>Don’t share cracked or pirated software.</div>
+      <div class="rule-line"><span class="emoji">💸</span>No real-world trading or selling accounts.</div>
+      <div class="rule-line"><span class="emoji">🧑‍💻</span>Alternate or fake accounts are not allowed.</div>
+
+      <h3>Humanity & Community Rules</h3>
+      <div class="rule-line"><span class="emoji">💖</span>Be kind, humble, and respectful to everyone.</div>
+      <div class="rule-line"><span class="emoji">🤝</span>No toxic behavior, threats, or insults.</div>
+      <div class="rule-line"><span class="emoji">🎭</span>Don’t fake identities or impersonate anyone.</div>
+      <div class="rule-line"><span class="emoji">📵</span>Never leak private info or screenshots.</div>
+      <div class="rule-line"><span class="emoji">🏅</span>Don’t beg for roles or special treatment.</div>
+      <div class="rule-line"><span class="emoji">🌈</span>Welcome new members and help them out.</div>
+
+      <h3>Media & Content Rules</h3>
+      <div class="rule-line"><span class="emoji">🚫</span>No NSFW or disturbing visuals.</div>
+      <div class="rule-line"><span class="emoji">❌</span>Avoid offensive memes or sensitive topics.</div>
+      <div class="rule-line"><span class="emoji">✍️</span>Credit original creators if reposting art or clips.</div>
+      <div class="rule-line"><span class="emoji">📷</span>Don’t share private screenshots or DMs.</div>
+      <div class="rule-line"><span class="emoji">📂</span>Post media only in the correct channels.</div>
+
+      <h3>Staff & Moderation Rules</h3>
+      <div class="rule-line"><span class="emoji">🧙‍♂️</span>Respect mods, their decision is final.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>Don’t ping or tag staff for no reason.</div>
+      <div class="rule-line"><span class="emoji">📝</span>If you disagree with a mod, open a support ticket.</div>
+      <div class="rule-line"><span class="emoji">⚔️</span>Don’t act like staff if you’re not one.</div>
+      <div class="rule-line"><span class="emoji">🤝</span>Cooperate during moderation or investigations.</div>
+
+      <h3>Discord Platform Rules</h3>
+      <div class="rule-line"><span class="emoji">📘</span>Follow Discord’s Terms of Service.</div>
+      <div class="rule-line"><span class="emoji">📜</span>Follow Discord’s Community Guidelines.</div>
+      <div class="rule-line"><span class="emoji">💡</span>Stay safe and enjoy the Aafat Family server!</div>  
+    </div>
+
+    <div id="asrp" class="tab-content">
+      <h2>Aafat Syndicate Roleplay - II</h2>
+      <h3>Universal Conduct Rules</h3>
+      <div class="rule-line"><span class="emoji">✨</span>Treat everyone with courtesy, kindness, and respect at all times.</div>
+      <div class="rule-line"><span class="emoji">🚫</span>Absolutely no cheating! Hacks, X-Ray, or any unauthorized clients mean instant, irreversible banishment from the realm.</div>
+      <div class="rule-line"><span class="emoji">🏰</span>Never grief, destroy, or vandalize protected builds unless you're acting out an approved roleplay scenario.</div>
+      <div class="rule-line"><span class="emoji">‍🛠️</span>If your farm or redstone contraption causes chaos (server lag), staff may wield their magical rollback powers to remove it—build responsibly.</div>
+      <div class="rule-line"><span class="emoji">📢</span>Advertising other servers or communities? Not in our kingdom—keep it ASRP-only.</div>
+      <div class="rule-line"><span class="emoji">👑</span>The word of staff is law! When staff speak, their decisions are final; obey without debate.</div>
+      <div class="rule-line"><span class="emoji">🔒</span>Guard your personal info and respect others’ privacy—real life details stay out of the chat.</div>
+      <div class="rule-line"><span class="emoji">⚠️</span>Duplicating items, using illegal macros, or sneaking in unapproved mods is forbidden on pain of banishment.</div>
+      <div class="rule-line"><span class="emoji">⚔️</span>Want to build a tricky RP trap? Get staff’s blessing first, so it’s fair for all.</div>
+      <div class="rule-line"><span class="emoji">🖋️</span>Keep names, books, and builds classy anything offensive has no place here.</div>
+	  
+      <h3>Roleplay Guidelines</h3>
+      <div class="rule-line"><span class="emoji">🎬</span>Dive into your character—roleplay is your passport here, so always stay in character during RP.</div>
+      <div class="rule-line"><span class="emoji">🛑</span>No random or revenge kills (RDM)! Only act violently if the storyline truly calls for it.</div>
+      <div class="rule-line"><span class="emoji">😱</span>Show real in-character fear in dangerous moments—make your journeys feel alive and believable.</div>
+      <div class="rule-line"><span class="emoji">🕹️‍</span>No powergaming: never force another player into actions against their will—let stories unfold together.</div>
+      <div class="rule-line"><span class="emoji">🧠</span>Use only what your character knows—no metagaming allowed! Keep OOC facts out of character choices.</div>
+      <div class="rule-line"><span class="emoji">🎩</span>Crime in roleplay is allowed, but only with respect for all the realm’s rules.</div>
+      <div class="rule-line"><span class="emoji">💼</span>Don’t abuse RP or staff powers, whether you’re a chief or a citizen—admins keep a watchful eye.</div>
+      <div class="rule-line"><span class="emoji">💣</span>Repeated RP offenses can earn fines, jail time, or the ultimate penalty: exile (banishment).</div>
+
+      <h3>Criminal Activity Control</h3>
+      <div class="rule-line"><span class="emoji">🔒</span>These acts are forbidden: theft, gang wars, kidnapping, unauthorized business, illegal trades, pickpocketing, or killing without a clear RP reason.</div>
+      <div class="rule-line"><span class="emoji">⚖️</span>Infractions are judged based on severity, with punishments ranging from fines to dungeon time (jail).</div>
+      <div class="rule-line"><span class="emoji">💻</span>Any type of hacking or tech-based crime isn’t tolerated—ever.</div>
+
+      <h3>Property and Commerce Protocols</h3>
+      <div class="rule-line"><span class="emoji">🏠</span>Buy land and shops through the official system only; no shortcuts or sneaky deals.</div>
+      <div class="rule-line"><span class="emoji">⏳</span>Go missing for more than 7 days? Your property may find new owners via staff auction.</div>
+      <div class="rule-line"><span class="emoji">🧾</span>“Legal” and “illegal” businesses require an RP backdrop—keep commerce woven into the story.</div>
+      <div class="rule-line"><span class="emoji">‍🗺️</span>Need to expand your land? Secure advance permission from rulers (admins) before breaking new ground.</div>
+
+      <h3>Survival and PvE Provisions</h3>
+      <div class="rule-line"><span class="emoji">🌽</span>Farm theft is strictly by staff-approved RP event only—otherwise, hands off.</div>
+      <div class="rule-line"><span class="emoji">🌱</span>Tend and respect all farms, redstone works, and creative builds; deliberate damage is outlawed.</div>
+      <div class="rule-line"><span class="emoji">🐾</span>Passive creatures (pets/villagers) may only be harmed with genuine RP storyline justification.</div>
+
+      <h3>Communication and Discord Rules</h3>
+      <div class="rule-line"><span class="emoji">📜</span>Keep chat and voice drama-free: avoid spam, excessive caps, and toxic outbursts.</div>
+      <div class="rule-line"><span class="emoji">💬</span>General channels speak only Hindi and English for easy moderation and friendship.</div>
+      <div class="rule-line"><span class="emoji">🔇</span>Discord voice trolls beware: no disruptive noises, no wild soundboards.</div>
+      <div class="rule-line"><span class="emoji">‍🍿</span>Hostile or threatening acts belong only in the story—never in real life or OOC talk.</div>
+
+      <h3>Immediate Ban Offenses</h3>
+      <div class="rule-line"><span class="emoji">🛑</span>Caught cheating? That’s a one-way ticket to permanent banland.</div>
+      <div class="rule-line"><span class="emoji">☠️</span>Real-life threats to players? You’ll be exiled instantly.</div>
+      <div class="rule-line"><span class="emoji">🚨</span>Inappropriate content toward minors, DDOS threats, or staff impersonation all bring swift and final banishment.</div>
+
+      <h3>Server Agreement (Terms & Conditions)</h3>
+      <div class="rule-line"><span class="emoji">🕵️‍♂️</span>By joining, you accept periodic checks of inventory, chat, and bases for safety.</div>
+      <div class="rule-line"><span class="emoji">👩‍⚖️</span>All bans and penalties by staff are final; no appeals court here.</div>
+      <div class="rule-line"><span class="emoji">💎</span>Server purchases are non-refundable; choose wisely.</div>
+      <div class="rule-line"><span class="emoji">‍🎥</span>Streaming is welcome, but always respect everyone’s privacy in your footage.</div>
+      <div class="rule-line"><span class="emoji">🕰️</span>Rules may be updated anytime—stay informed, stay legendary.</div>
+
+      <h3>Disciplinary Actions</h3>
+      <div class="rule-line"><span class="emoji">🗣️</span>First mistake? Expect a friendly warning and a lesson on the rulebook.</div>
+      <div class="rule-line"><span class="emoji">💸</span>Second slip-up? You may pay a fine or spend time in the RP jail.</div>
+      <div class="rule-line"><span class="emoji">🚷</span>Third strike? That’s a temporary ban to cool you off.</div>
+      <div class="rule-line"><span class="emoji">🚫‍</span>For the worst or most repeated rulebreakers, only permanent exile remains.</div>
+    </div>
+
+  <div class="button-container">
+    <a href="https://youtube.com/@mafiaaafat?si=gJsHd43FYviEPlyf" target="_blank" class="glow-button youtube-button">▶ YouTube</a>
+    <a href="https://discord.gg/uVEfyWtTfp/" target="_blank" class="glow-button">💬 Discord</a>
+    <a href="https://instagram.com/" target="_blank" class="glow-button instagram-button">📸 Instagram</a>
+  </div>
+
+  <footer>
+    <p>© 2025 Aafat Gaming | All Rights Reserved </p>
+  </footer>
+
+  <!-- ✅ Working tab switching script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const buttons = document.querySelectorAll(".tab-button");
+      const tabs = document.querySelectorAll(".tab-content");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => b.classList.remove("active"));
+          tabs.forEach((tab) => tab.classList.remove("active"));
+
+          btn.classList.add("active");
+          document.getElementById(btn.dataset.tab).classList.add("active");
+        });
+      });
+    });
+  </script>
+</body>
+</html>
