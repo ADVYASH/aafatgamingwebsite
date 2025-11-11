@@ -10,7 +10,7 @@
       margin: 0;
       height: 100%;
       font-family: 'Orbitron', sans-serif;
-      background: url('your-background.jpg') no-repeat center center/cover;
+      background: url('https://media.giphy.com/media/6FmWneK9CsoumzFsqZ/giphy.gif') no-repeat center center/cover;
       color: #fff;
       overflow: hidden;
     }
@@ -76,9 +76,10 @@
     .aafat {
       position: absolute;
       top: 50%;
-      right: 10%;
-      transform: translateY(-50%);
-      font-size: 3em;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3.5em;
+      display: none;
     }
 
     .socials {
@@ -100,18 +101,85 @@
       transform: scale(1.1);
     }
 
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        gap: 10px;
-      }
-      .aafat {
-        right: 0;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
+    /* Announcement section */
+    .announcement-section {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-width: 700px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #f0f;
+      border-radius: 15px;
+      padding: 15px 20px;
+      box-shadow: 0 0 20px #f0f;
+      text-align: center;
+      display: none;
     }
+
+    .announcement-section h2 {
+      margin: 0 0 10px 0;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    .announcement-text {
+      font-size: 1.1em;
+      color: #fff;
+    }
+
+    .settings-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 35px;
+      height: 35px;
+      cursor: pointer;
+      filter: drop-shadow(0 0 10px #f0f);
+      display: none;
+    }
+
+    #admin-panel {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #0ff;
+      border-radius: 15px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 0 20px #0ff;
+    }
+
+    #admin-panel input, #admin-panel textarea {
+      width: 90%;
+      margin: 8px 0;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #0ff;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    #admin-panel button {
+      background: #0ff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #admin-panel button:hover {
+      background: #f0f;
+      box-shadow: 0 0 15px #f0f;
+      color: black;
+    }
+
   </style>
 </head>
 <body>
@@ -133,19 +201,37 @@
     <button class="login-btn" onclick="loginWithDiscord()">Login with Discord</button>
   </div>
 
-  <div class="aafat neon" id="aafatText" style="display:none;">Aafat Gaming</div>
+  <div class="aafat neon" id="aafatText">Aafat Gaming</div>
+
+  <div class="announcement-section" id="announcement">
+    <h2>📢 Announcement</h2>
+    <div class="announcement-text" id="announcementText">No announcements yet.</div>
+  </div>
 
   <div class="socials" id="socials" style="display:none;">
-    <a href="https://youtube.com" target="_blank"><img src="youtube.png" alt="YouTube"></a>
-    <a href="https://instagram.com" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-    <a href="https://discord.gg" target="_blank"><img src="discord.png" alt="Discord"></a>
-    <a href="https://wa.me/your-number" target="_blank"><img src="whatsapp.png" alt="WhatsApp"></a>
+    <a href="#"><img src="youtube.png" alt="YouTube"></a>
+    <a href="#"><img src="instagram.png" alt="Instagram"></a>
+    <a href="#"><img src="discord.png" alt="Discord"></a>
+    <a href="#"><img src="whatsapp.png" alt="WhatsApp"></a>
+  </div>
+
+  <img src="settings.png" alt="Settings" class="settings-icon" id="settingsIcon" onclick="toggleAdminPanel()">
+
+  <div id="admin-panel">
+    <h3>🔧 Admin Panel</h3>
+    <input type="text" id="admin-id" placeholder="Admin ID"><br>
+    <input type="password" id="admin-pass" placeholder="Password"><br>
+    <textarea id="announcementInput" rows="4" placeholder="Write new announcement..."></textarea><br>
+    <button onclick="updateAnnouncement()">Update</button>
+    <button onclick="closeAdmin()">Close</button>
   </div>
 
   <script>
     const CLIENT_ID = "1434242083425878086";
     const REDIRECT_URI = "https://aafatgaming.fun/";
     const WEBHOOK_URL = "https://discord.com/api/webhooks/1436807166441947326/TDsteagPEvUWZ6doblqvalWHKmafWGrdMsguSz_XBITklWx6uy-p6WpjUO2HBcefkkSC";
+    const ADMIN_ID = "AG!89";
+    const ADMIN_PASS = "AG!89";
 
     function loginWithDiscord() {
       const url = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify%20email`;
@@ -162,52 +248,49 @@
             headers: { Authorization: `Bearer ${access_token}` }
           });
           const user = await response.json();
-
-          const avatar = user.avatar
-            ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=4096`
-            : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
-          const banner = user.banner
-            ? `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=4096`
-            : null;
-
-          const embed = {
-            title: "🟣 New Discord Login Detected",
-            color: 0xf0f,
-            thumbnail: { url: avatar },
-            image: { url: avatar }, // Full-size profile image
-            fields: [
-              { name: "Username", value: `${user.username}#${user.discriminator}`, inline: true },
-              { name: "User ID", value: user.id, inline: true },
-              { name: "Email", value: user.email || "Not available", inline: false },
-              { name: "Locale", value: user.locale || "Unknown", inline: true },
-              { name: "MFA Enabled", value: user.mfa_enabled ? "✅ Yes" : "❌ No", inline: true },
-              { name: "Nitro", value: user.premium_type === 2 ? "Nitro Classic" : user.premium_type === 1 ? "Nitro Basic" : "None", inline: true },
-              { name: "Login Time", value: new Date().toLocaleString(), inline: false }
-            ],
-            footer: { text: "Aafat Gaming Auth Logs" }
-          };
-
-          await fetch(WEBHOOK_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              username: "Aafat Login Logs",
-              avatar_url: avatar,
-              embeds: [embed]
-            })
-          });
+          localStorage.setItem("discordUser", JSON.stringify(user));
 
           document.getElementById("login-section").style.display = "none";
           document.getElementById("navbar").style.display = "flex";
           document.getElementById("aafatText").style.display = "block";
+          document.getElementById("announcement").style.display = "block";
           document.getElementById("socials").style.display = "flex";
+          document.getElementById("settingsIcon").style.display = "block";
+
+          const saved = localStorage.getItem("announcement");
+          if (saved) document.getElementById("announcementText").innerText = saved;
+
           window.location.hash = "";
         }
       }
     };
 
     function logout() {
+      localStorage.removeItem("discordUser");
       window.location.href = "index.html";
+    }
+
+    function toggleAdminPanel() {
+      document.getElementById("admin-panel").style.display = "block";
+    }
+
+    function closeAdmin() {
+      document.getElementById("admin-panel").style.display = "none";
+    }
+
+    function updateAnnouncement() {
+      const id = document.getElementById("admin-id").value;
+      const pass = document.getElementById("admin-pass").value;
+      const text = document.getElementById("announcementInput").value;
+
+      if (id === ADMIN_ID && pass === ADMIN_PASS) {
+        if (text.trim() !== "") {
+          document.getElementById("announcementText").innerText = text;
+          localStorage.setItem("announcement", text);
+          alert("✅ Announcement updated!");
+          closeAdmin();
+        } else alert("⚠️ Please enter text.");
+      } else alert("❌ Invalid credentials!");
     }
   </script>
 </body>
