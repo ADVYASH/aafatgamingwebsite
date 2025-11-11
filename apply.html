@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Aafat Gaming — Application</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --neon:#f0f;
+    --accent:#0ff;
+    --glass: rgba(0,0,0,0.6);
+  }
+  html,body{height:100%;margin:0;font-family:'Orbitron',sans-serif;background: url('https://images.unsplash.com/photo-1604079628040-943c20da20a7?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;color:#fff;display:flex;align-items:center;justify-content:center;}
+  .card{
+    width:95%;
+    max-width:900px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.65));
+    border:2px solid var(--neon);
+    box-shadow:0 0 30px var(--neon);
+    border-radius:16px;
+    padding:18px;
+    display:flex;
+    gap:18px;
+    flex-direction:column;
+  }
+  h1{margin:0 0 6px 0;color:var(--neon);text-shadow:0 0 8px var(--neon);}
+  .sub{color:var(--accent);margin:0 0 12px 0}
+  .row{display:flex;gap:12px;flex-wrap:wrap;}
+  label{display:block;font-size:0.9rem;margin-bottom:6px}
+  input[type="text"], input[type="number"], select, textarea{
+    width:100%;padding:10px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:#fff;font-family:'Orbitron';box-sizing:border-box;
+  }
+  button{padding:10px 16px;border-radius:10px;border:2px solid var(--neon);background:transparent;color:var(--neon);cursor:pointer;font-weight:700;}
+  button:hover{background:var(--neon);color:#000;box-shadow:0 0 18px var(--neon);}
+  .hidden{display:none;}
+  .center{display:flex;align-items:center;justify-content:center;}
+  .quiz-area{margin-top:6px;}
+  .question{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;margin-bottom:8px;border:1px solid rgba(255,255,255,0.03)}
+  .options{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+  .option label{cursor:pointer;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+  .small{font-size:0.85rem;color:#ddd}
+  .result{padding:12px;border-radius:10px;margin-top:10px;background:rgba(0,0,0,0.5);border:1px solid var(--accent)}
+  @media (min-width:900px){
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  }
+</style>
+</head>
+<body>
+  <div class="card" id="appCard">
+    <div>
+      <h1>Apply — Minecraft Server</h1>
+      <p class="sub">Fill your details, take the quiz. Score ≥ 3 = Accepted.</p>
+    </div>
+
+    <!-- Part 1: Details Form -->
+    <div id="detailsSection">
+      <div class="form-grid">
+        <div>
+          <label>Full Name</label>
+          <input id="fullName" type="text" placeholder="Your full name" />
+        </div>
+        <div>
+          <label>Age</label>
+          <input id="age" type="number" min="6" placeholder="Your age" />
+        </div>
+        <div>
+          <label>Minecraft Username</label>
+          <input id="mcName" type="text" placeholder="e.g. Notch" />
+        </div>
+        <div>
+          <label>Minecraft Edition</label>
+          <select id="mcEdition">
+            <option value="java">Java</option>
+            <option value="bedrock">Bedrock</option>
+            <option value="crack">Cracked</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button id="startQuizBtn">Start Quiz</button>
+        <button id="prefillBtn" title="If logged in via Discord, pre-fill name">Prefill from Discord</button>
+        <div style="margin-left:auto" class="small">You must be logged in on homepage — user data will be used to mention you.</div>
+      </div>
+    </div>
+
+    <!-- Part 2: Quiz -->
+    <div id="quizSection" class="hidden">
+      <div id="quizContainer"></div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
+        <button id="submitQuizBtn">Submit Application</button>
+      </div>
+    </div>
+
+    <!-- Result / Status -->
+    <div id="status" class="hidden"></div>
+  </div>
+
+<script>
+/* ========== CONFIG - replace webhooks & images ========== */
+const MAIN_WEBHOOK = "https://discord.com/api/webhooks/1436807166441947326/TDsteagPEvUWZ6doblqvalWHKmafWGrdMsguSz_XBITklWx6uy-p6WpjUO2HBcefkkSC";   // replace
+const ACCEPT_WEBHOOK = "https://discord.com/api/webhooks/1436099433111490683/yEc9vzWMInWsBsK3xLUeuIaILdPF3ipsmaUia76eR6aFLp0FrImMXU6R--tD-iefN2M9"; // replace
+const REJECT_WEBHOOK = "https://discord.com/api/webhooks/1436099433111490683/yEc9vzWMInWsBsK3xLUeuIaILdPF3ipsmaUia76eR6aFLp0FrImMXU6R--tD-iefN2M9"; // replace
+
+const ACCEPT_IMAGE = "https://i.imgur.com/L6y4q1w.png"; // default accept image (replace if you want)
+const REJECT_IMAGE = "https://i.imgur.com/XqU9L7J.png"; // default reject image (replace if you want)
+
+const PASS_THRESHOLD = 3; // score required to accept
+
+/* ========== SAMPLE QUESTIONS (10) with correct answers ========== */
+const QUESTIONS = [
+  { q: "What dimension do you find the End?", options:["Overworld","Nether","End","Sky"], a:2 },
+  { q: "Which block is necessary to respawn the Ender Dragon?", options:["Obsidian","End Crystal","Beacon","End Portal"], a:1 },
+  { q: "What tool is required to mine stone and ores?", options:["Wooden Shovel","Stick","Pickaxe","Axe"], a:2 },
+  { q: "Which mob drops Ender Pearls?", options:["Zombie","Creeper","Enderman","Skeleton"], a:2 },
+  { q: "What item do you need to breathe underwater?", options:["Shield","Elytra","Potion of Night Vision","Respiration Helmet"], a:3 },
+  { q: "Which ore can only be found in the Nether?", options:["Diamond","Gold","Coal","Ancient Debris"], a:3 },
+  { q: "Which material is required to craft a Beacon?", options:["Gold","Emerald","Netherite","Obsidian"], a:1 },
+  { q: "Which enchantment reduces fall damage?", options:["Feather Falling","Protection","Thorns","Unbreaking"], a:0 },
+  { q: "What is the maximum stack size for ender pearls?", options:["16","32","64","1"], a:2 },
+  { q: "What do you need to make Netherite?", options:["Gold + Diamond","Netherite Ingot + Diamond","Ancient Debris + Gold","Ancient Debris + Netherite Scrap"], a:2 }
+];
+
+/* ========== UI ELEMENTS ========= */
+const startBtn = document.getElementById("startQuizBtn");
+const prefillBtn = document.getElementById("prefillBtn");
+const detailsSection = document.getElementById("detailsSection");
+const quizSection = document.getElementById("quizSection");
+const quizContainer = document.getElementById("quizContainer");
+const submitQuizBtn = document.getElementById("submitQuizBtn");
+const statusDiv = document.getElementById("status");
+
+/* ========== Helpers ========= */
+function getDiscordUser(){
+  try{
+    return JSON.parse(localStorage.getItem("discordUser"));
+  }catch(e){
+    return null;
+  }
+}
+
+function showStatus(html){
+  statusDiv.classList.remove("hidden");
+  statusDiv.innerHTML = `<div class="result">${html}</div>`;
+  statusDiv.scrollIntoView({behavior:'smooth'});
+}
+
+/* ========== Prefill from discord if available ========== */
+prefillBtn.addEventListener("click", ()=> {
+  const d = getDiscordUser();
+  if(!d){ alert("You are not logged in. Please login from homepage first."); return; }
+  // if discord username available, put in mcName or fullName
+  const nameInput = document.getElementById("fullName");
+  const mcInput = document.getElementById("mcName");
+  if(d.username && !nameInput.value) nameInput.value = d.username;
+  if(d.username && !mcInput.value) mcInput.value = d.username;
+  alert("Prefilled from Discord profile (if fields were empty).");
+});
+
+/* ========== Render quiz questions ========= */
+function renderQuiz(){
+  quizContainer.innerHTML = "";
+  const wrapper = document.createElement("div");
+  wrapper.className = "quiz-area";
+  QUESTIONS.forEach((it, idx) =>{
+    const qdiv = document.createElement("div");
+    qdiv.className = "question";
+    qdiv.innerHTML = `<strong>Q${idx+1}.</strong> ${it.q}`;
+    const opts = document.createElement("div");
+    opts.className = "options";
+    it.options.forEach((opt, oi)=>{
+      const optId = `q${idx}_o${oi}`;
+      const option = document.createElement("div");
+      option.className = "option";
+      option.innerHTML = `<input type="radio" name="q${idx}" id="${optId}" value="${oi}" />
+                          <label for="${optId}"> ${String.fromCharCode(65+oi)}. ${opt}</label>`;
+      opts.appendChild(option);
+    });
+    qdiv.appendChild(opts);
+    wrapper.appendChild(qdiv);
+  });
+  quizContainer.appendChild(wrapper);
+}
+
+/* ========== Start quiz handler ========= */
+startBtn.addEventListener("click", ()=> {
+  // validate details
+  const fullName = document.getElementById("fullName").value.trim();
+  const age = document.getElementById("age").value.trim();
+  const mcName = document.getElementById("mcName").value.trim();
+  const mcEdition = document.getElementById("mcEdition").value;
+
+  if(!fullName || !age || !mcName){
+    alert("Please fill Full name, Age and Minecraft username before starting.");
+    return;
+  }
+  // hide details show quiz
+  detailsSection.classList.add("hidden");
+  quizSection.classList.remove("hidden");
+  renderQuiz();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+
+/* ========== Submit application handler ========= */
+submitQuizBtn.addEventListener("click", async ()=>{
+  const fullName = document.getElementById("fullName").value.trim();
+  const age = document.getElementById("age").value.trim();
+  const mcName = document.getElementById("mcName").value.trim();
+  const mcEdition = document.getElementById("mcEdition").value;
+  const discord = getDiscordUser();
+  if(!discord){ alert("You must be logged in via Discord from homepage before applying."); window.location.href="index.html"; return; }
+
+  // collect answers & compute score
+  const answers = [];
+  let score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const radios = document.getElementsByName(`q${i}`);
+    let sel = null;
+    for(const r of radios) if(r.checked) sel = parseInt(r.value);
+    answers.push( sel === null ? null : sel );
+    if(sel !== null && sel === QUESTIONS[i].a) score++;
+  }
+
+  // require all answered? No — partial answers allowed. But we can warn:
+  // const unanswered = answers.filter(a=>a===null).length;
+  // if(unanswered>0){ if(!confirm(`You left ${unanswered} question(s) unanswered. Continue?`)) return; }
+
+  showStatus("Submitting application...");
+
+  const timestamp = new Date().toISOString();
+
+  // Build human-readable answers block
+  const answerLines = QUESTIONS.map((q, i)=>{
+    const userAnsIdx = answers[i];
+    const userAnsText = userAnsIdx === null ? "No answer" : q.options[userAnsIdx];
+    const correct = q.options[q.a];
+    return `Q${i+1}: ${q.q}\n → Answer: ${userAnsText}\n → Correct: ${correct}`;
+  }).join("\n\n");
+
+  // Avatar (full-size if available)
+  const avatarUrl = discord.avatar ? `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.png?size=4096` : `https://cdn.discordapp.com/embed/avatars/${discord.discriminator % 5}.png`;
+
+  // Prepare main webhook payload (mention applicant in content to ping)
+  const mainPayload = {
+    content: `New Application from <@${discord.id}>`, // mention
+    embeds: [{
+      title: "Minecraft Server Application",
+      color: 0x00ff99,
+      thumbnail: { url: avatarUrl },
+      fields: [
+        { name: "Discord", value: `${discord.username}#${discord.discriminator} (<@${discord.id}>)`, inline: false },
+        { name: "Discord ID", value: discord.id, inline: true },
+        { name: "Full Name", value: fullName, inline: true },
+        { name: "Age", value: String(age), inline: true },
+        { name: "Minecraft Username", value: mcName, inline: true },
+        { name: "Edition", value: mcEdition, inline: true },
+        { name: "Score", value: `${score} / ${QUESTIONS.length}`, inline: true },
+        { name: "Submitted At", value: timestamp, inline: false },
+        { name: "Answers (user -> correct)", value: `\`\`\`\n${answerLines}\n\`\`\``, inline: false }
+      ],
+      image: { url: avatarUrl },
+      footer: { text: "Aafat Gaming Applications" },
+      timestamp: timestamp
+    }]
+  };
+
+  // Send to MAIN webhook
+  try{
+    await fetch(MAIN_WEBHOOK, {
+      method:'POST',
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(mainPayload)
+    });
+  }catch(e){
+    console.error("Main webhook error", e);
+  }
+
+  // Decide accept or reject
+  const passed = score >= PASS_THRESHOLD;
+  const webhookUrl = passed ? ACCEPT_WEBHOOK : REJECT_WEBHOOK;
+  const color = passed ? 0x2ecc71 : 0xe74c3c;
+  const title = passed ? "✅ Application Accepted" : "❌ Application Rejected";
+  const imageUrl = passed ? ACCEPT_IMAGE : REJECT_IMAGE;
+  const reasonText = passed ? "Passed minimum score requirement." : "Score below required threshold.";
+
+  const mentionContent = `<@${discord.id}>`;
+
+  const resultEmbed = {
+    title: title,
+    description: `${mentionContent}\n**${fullName}** (${mcName}) — Score: **${score}/${QUESTIONS.length}**\n${reasonText}`,
+    color: color,
+    thumbnail: { url: avatarUrl },
+    image: { url: imageUrl },
+    fields: [
+      { name: "Discord", value: `${discord.username}#${discord.discriminator}`, inline:true },
+      { name: "Discord ID", value: discord.id, inline:true },
+      { name: "Minecraft", value: `${mcName} (${mcEdition})`, inline:true },
+      { name: "Submitted At", value: timestamp, inline:false }
+    ],
+    footer: { text: "Aafat Gaming Applications" },
+    timestamp: timestamp
+  };
+
+  try{
+    await fetch(webhookUrl, {
+      method:'POST',
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        content: mentionContent,
+        embeds: [ resultEmbed ]
+      })
+    });
+  }catch(e){
+    console.error("Accept/Reject webhook error", e);
+  }
+
+  // Show final result to user
+  const passText = passed ? `<strong style="color:#7CFC00">Congratulations — You have been accepted! (Score: ${score}/${QUESTIONS.length})</strong>` : `<strong style="color:#FF6B6B">Sorry — You were not accepted. (Score: ${score}/${QUESTIONS.length})</strong>`;
+  showStatus(`${passText}<br><br>Your application has been submitted. We mentioned you in the server. Good luck!`);
+
+  // Optionally save submission locally
+  const record = { discord, fullName, age, mcName, mcEdition, answers, score, timestamp };
+  const history = JSON.parse(localStorage.getItem("applications")||"[]");
+  history.unshift(record);
+  localStorage.setItem("applications", JSON.stringify(history));
+
+  // hide submit button after send
+  submitQuizBtn.disabled = true;
+});
+
+/* ========== Prevent access if not logged in (optional) ========= */
+(function(){
+  const d = getDiscordUser();
+  if(!d){
+    alert("You must be logged in via Discord from the homepage before applying. Redirecting...");
+    window.location.href = "index.html";
+  }
+})();
+</script>
+</body>
+</html>
