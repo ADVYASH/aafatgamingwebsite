@@ -1,200 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aafat Gaming</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #000;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aafat Gaming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://media.giphy.com/media/6FmWneK9CsoumzFsqZ/giphy.gif') no-repeat center center/cover;
+      height: 100vh;
+      color: #fff;
+      overflow: hidden;
+    }
 
-  /* Navbar styles */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: rgba(0,0,0,0.5);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 999;
-  }
+    /* Neon glow text */
+    .neon {
+      color: #f0f;
+      text-shadow: 0 0 5px #f0f, 0 0 10px #f0f, 0 0 20px #f0f, 0 0 40px #f0f;
+    }
 
-  /* Logo with glow */
-  .logo-container {
-    display: flex;
-    align-items: center;
-  }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+    }
 
-  .logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    box-shadow: 0 0 20px #fff, 0 0 40px #fff inset;
-    overflow: hidden;
-  }
+    .logo {
+      font-size: 1.8em;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+    }
 
-  /* Menu styles */
-  .menu {
-    display: flex;
-    gap: 20px;
-  }
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 1em;
+      transition: 0.3s;
+    }
 
-  .menu a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    padding: 8px 12px;
-    transition: 0.3s;
-  }
+    nav a:hover {
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+    }
 
-  .menu a:hover {
-    color: #7289da;
-  }
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
 
-  /* Center content */
-  .center-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding-top: 70px; /* to avoid overlap with navbar */
-  }
+    .login-btn {
+      background: transparent;
+      border: 2px solid #f0f;
+      padding: 10px 30px;
+      font-size: 1.2em;
+      color: #f0f;
+      text-shadow: 0 0 10px #f0f;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
 
-  .title {
-    font-size: 3em;
-    color: #fff;
-    margin-bottom: 20px;
-  }
+    .login-btn:hover {
+      background: #f0f;
+      color: black;
+      box-shadow: 0 0 20px #f0f;
+    }
 
-  /* Social icons styles */
-  .social-icons {
-    display: flex;
-    gap: 20px;
-  }
+    .aafat {
+      position: absolute;
+      top: 50%;
+      right: 10%;
+      transform: translateY(-50%);
+      font-size: 3em;
+    }
 
-  .social-icon {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #fff, 0 0 20px #fff inset;
-    transition: all 0.3s;
-  }
+    .socials {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+    }
 
-  .social-icon:hover {
-    box-shadow: 0 0 20px #fff, 0 0 30px #fff inset;
-    transform: scale(1.1);
-  }
+    .socials img {
+      width: 40px;
+      transition: 0.3s;
+      filter: drop-shadow(0 0 10px #f0f);
+    }
 
-  /* Optional: add some background or style to body */
-</style>
+    .socials img:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .aafat {
+        right: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="logo neon"></div>
+    <nav id="navbar" style="display:none;">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="rule.html">Rules</a>
+      <a href="game.html">Game</a>
+      <a href="server.html">Server</a>
+      <a href="apply.html">Apply</a>
+      <a href="profile.html">Profile</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
 
-<!-- Navbar -->
-<div class="navbar">
-  <div class="logo-container">
-    <div class="logo">
-      <!-- Placeholder logo, replace src with your logo image if available -->
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Discord_logo.svg" alt="Logo" style="width:50px; height:50px;">
-    </div>
+  <div class="center" id="login-section">
+    <button class="login-btn" onclick="loginWithDiscord()">Login with Discord</button>
   </div>
-  <div class="menu">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="Rule.html">Rules</a>
-    <a href="game.html">Game</a>
-    <a href="server.html">Server</a>
-    <a href="Apply.html">Apply</a>
-    <a href="Profile.html">Profile</a>
-    <a id="logout" href="#">Logout</a>
+
+  <div class="aafat neon" id="aafatText" style="display:none;">Aafat Gaming</div>
+
+  <div class="socials" id="socials" style="display:none;">
+    <a href="https://youtube.com" target="_blank"><img src="youtube.png" alt="YouTube"></a>
+    <a href="https://instagram.com" target="_blank"><img src="instagram.png" alt="Instagram"></a>
+    <a href="https://discord.gg" target="_blank"><img src="discord.png" alt="Discord"></a>
+    <a href="https://wa.me/your-number" target="_blank"><img src="whatsapp.png" alt="WhatsApp"></a>
   </div>
-</div>
 
-<!-- Main Center Content -->
-<div class="center-content">
-  <div class="title">Aafat Gaming</div>
-  <!-- Social Media Icons -->
-  <div class="social-icons">
-    <a href="https://youtube.com" target="_blank" class="social-icon" title="YouTube">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube" style="width:24px; height:24px;">
-    </a>
-    <a href="https://instagram.com" target="_blank" class="social-icon" title="Instagram">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" style="width:24px; height:24px;">
-    </a>
-    <a href="https://discord.com" target="_blank" class="social-icon" title="Discord">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord" style="width:24px; height:24px;">
-    </a>
-    <a href="https://whatsapp.com" target="_blank" class="social-icon" title="WhatsApp">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" style="width:24px; height:24px;">
-    </a>
-  </div>
-</div>
+  <script>
+    const CLIENT_ID = "1434242083425878086";
+    const REDIRECT_URI = "https://aafatgaming.fun/";
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1436807166441947326/TDsteagPEvUWZ6doblqvalWHKmafWGrdMsguSz_XBITklWx6uy-p6WpjUO2HBcefkkSC";
 
-<script>
-  // Example: Logout button functionality
-  document.getElementById('logout').onclick = () => {
-    alert('Logged out!');
-    // Add your logout logic here
-  };
+    // Login with Discord
+    function loginWithDiscord() {
+      const url = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+      window.location.href = url;
+    }
 
-  // Function to send login logs to Discord webhook
-  function sendLoginLogToDiscord(profile) {
-    const webhookURL = 'https://discord.com/api/webhooks/1436807166441947326/TDsteagPEvUWZ6doblqvalWHKmafWGrdMsguSz_XBITklWx6uy-p6WpjUO2HBcefkkSC'; // Replace with your webhook URL
+    // On page load, check login
+    window.onload = async () => {
+      if (window.location.hash) {
+        const params = new URLSearchParams(window.location.hash.substring(1));
+        const access_token = params.get("access_token");
 
-    const embed = {
-      title: "New Login",
-      color: 0x7289da,
-      thumbnail: {
-        url: profile.avatar,
-      },
-      fields: [
-        { name: "Name", value: profile.username, inline: true },
-        { name: "Nickname", value: profile.nickname || "N/A", inline: true },
-        { name: "Mention", value: `<@${profile.id}>`, inline: false },
-        { name: "User ID", value: profile.id, inline: true },
-        { name: "Email", value: profile.email || "N/A", inline: false }
-      ],
-      timestamp: new Date().toISOString(),
+        if (access_token) {
+          const response = await fetch("https://discord.com/api/users/@me", {
+            headers: { Authorization: `Bearer ${access_token}` }
+          });
+          const user = await response.json();
+
+          // Send login info to webhook
+          await fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              embeds: [{
+                title: "New Discord Login",
+                color: 0xf0f,
+                thumbnail: { url: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` },
+                fields: [
+                  { name: "Username", value: `${user.username}#${user.discriminator}`, inline: true },
+                  { name: "User ID", value: user.id, inline: true },
+                  { name: "Login Time", value: new Date().toLocaleString(), inline: false }
+                ]
+              }]
+            })
+          });
+
+          // Show website content
+          document.getElementById("login-section").style.display = "none";
+          document.getElementById("navbar").style.display = "flex";
+          document.getElementById("aafatText").style.display = "block";
+          document.getElementById("socials").style.display = "flex";
+        }
+      }
     };
 
-    fetch(webhookURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ embeds: [embed] }),
-    }).then(res => {
-      if (res.ok) {
-        console.log('Login log sent to Discord.');
-      } else {
-        console.error('Failed to send login log.');
-      }
-    }).catch(error => {
-      console.error('Error sending to Discord:', error);
-    });
-  }
-
-  // Example: Simulate a login and send log
-  // Replace this with actual login logic
-  const userProfile = {
-    username: "User#1234",
-    id: "1234567890",
-    avatar: "https://cdn.discordapp.com/avatars/userid/avatarhash.png",
-    email: "user@example.com",
-    nickname: "UserNick"
-  };
-
-  // Call this function after user logs in
-  // Remember to replace webhook URL above
-  // sendLoginLogToDiscord(userProfile);
-</script>
-
+    // Logout function
+    function logout() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
