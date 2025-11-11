@@ -21,10 +21,10 @@
 
   #container {
     width: 100%;
-    max-width: 800px;
+    max-width: 400px; /* restrict width if needed */
     padding: 20px;
     text-align: center;
-  }
+}
 
   #loginBtn {
     padding: 15px 30px;
@@ -36,6 +36,8 @@
     cursor: pointer;
     box-shadow: 0 0 15px #5865f2;
     transition: 0.3s;
+    max-width: 100%; /* prevent overflow */
+    word-wrap: break-word; /* if text is too long */
   }
 
   #loginBtn:hover {
@@ -292,4 +294,5 @@
 </script>
 </body>
 </html>
+
 
