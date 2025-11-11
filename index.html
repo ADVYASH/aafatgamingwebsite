@@ -6,16 +6,16 @@
   <title>Aafat Gaming</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
-    body {
+    html, body {
       margin: 0;
+      height: 100%;
       font-family: 'Orbitron', sans-serif;
-      background: url('https://media.giphy.com/media/6FmWneK9CsoumzFsqZ/giphy.gif') no-repeat center center/cover;
-      height: 100vh;
+      background: url('your-background.jpg') no-repeat center center/cover;
       color: #fff;
       overflow: hidden;
     }
 
-    /* Neon glow text */
+    /* Neon glow */
     .neon {
       color: #f0f;
       text-shadow: 0 0 5px #f0f, 0 0 10px #f0f, 0 0 20px #f0f, 0 0 40px #f0f;
@@ -147,13 +147,11 @@
     const REDIRECT_URI = "https://aafatgaming.fun/";
     const WEBHOOK_URL = "https://discord.com/api/webhooks/1436807166441947326/TDsteagPEvUWZ6doblqvalWHKmafWGrdMsguSz_XBITklWx6uy-p6WpjUO2HBcefkkSC";
 
-    // Login with Discord
     function loginWithDiscord() {
-      const url = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+      const url = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify%20email`;
       window.location.href = url;
     }
 
-    // On page load, check login
     window.onload = async () => {
       if (window.location.hash) {
         const params = new URLSearchParams(window.location.hash.substring(1));
@@ -165,36 +163,50 @@
           });
           const user = await response.json();
 
-          // Send login info to webhook
+          const avatar = user.avatar
+            ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=4096`
+            : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
+          const banner = user.banner
+            ? `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=4096`
+            : null;
+
+          const embed = {
+            title: "🟣 New Discord Login Detected",
+            color: 0xf0f,
+            thumbnail: { url: avatar },
+            image: { url: avatar }, // Full-size profile image
+            fields: [
+              { name: "Username", value: `${user.username}#${user.discriminator}`, inline: true },
+              { name: "User ID", value: user.id, inline: true },
+              { name: "Email", value: user.email || "Not available", inline: false },
+              { name: "Locale", value: user.locale || "Unknown", inline: true },
+              { name: "MFA Enabled", value: user.mfa_enabled ? "✅ Yes" : "❌ No", inline: true },
+              { name: "Nitro", value: user.premium_type === 2 ? "Nitro Classic" : user.premium_type === 1 ? "Nitro Basic" : "None", inline: true },
+              { name: "Login Time", value: new Date().toLocaleString(), inline: false }
+            ],
+            footer: { text: "Aafat Gaming Auth Logs" }
+          };
+
           await fetch(WEBHOOK_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              embeds: [{
-                title: "New Discord Login",
-                color: 0xf0f,
-                thumbnail: { url: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` },
-                fields: [
-                  { name: "Username", value: `${user.username}#${user.discriminator}`, inline: true },
-                  { name: "User ID", value: user.id, inline: true },
-                  { name: "Login Time", value: new Date().toLocaleString(), inline: false }
-                ]
-              }]
+              username: "Aafat Login Logs",
+              avatar_url: avatar,
+              embeds: [embed]
             })
           });
 
-          // Show website content
           document.getElementById("login-section").style.display = "none";
           document.getElementById("navbar").style.display = "flex";
           document.getElementById("aafatText").style.display = "block";
           document.getElementById("socials").style.display = "flex";
+          window.location.hash = "";
         }
       }
     };
 
-    // Logout function
     function logout() {
-      localStorage.clear();
       window.location.href = "index.html";
     }
   </script>
