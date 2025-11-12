@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Announcements</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="center-box">
+    <h1>📢 Admin Panel</h1>
+    <form id="loginForm">
+      <input id="adminId" placeholder="Admin ID" /><br><br>
+      <input id="adminPass" placeholder="Password" type="password" /><br><br>
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <div id="annSection" style="display:none;">
+      <textarea id="announcement" placeholder="Write announcement..." rows="4" cols="40"></textarea><br>
+      <button id="sendBtn" class="btn">Post</button>
+      <p id="status"></p>
+    </div>
+  </div>
+
+  <script>
+    const adminID = "admin123";
+    const adminPASS = "mypassword";
+
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = adminId.value;
+      const pass = adminPass.value;
+      if (id === adminID && pass === adminPASS) {
+        loginForm.style.display = "none";
+        annSection.style.display = "block";
+      } else {
+        alert("❌ Invalid credentials");
+      }
+    });
+
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const msg = announcement.value.trim();
+      if (!msg) return alert("Enter announcement");
+      const res = await fetch("YOUR_WEBHOOK_URL", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: `📢 **Announcement:** ${msg}` }),
+      });
+      document.getElementById("status").innerText = "✅ Announcement sent!";
+      announcement.value = "";
+    });
+  </script>
+</body>
+</html>
